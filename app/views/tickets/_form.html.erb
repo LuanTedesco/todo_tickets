@@ -2,7 +2,6 @@
   <% if ticket.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(ticket.errors.count, "error") %> prohibited this ticket from being saved:</h2>
-
       <ul>
         <% ticket.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -10,77 +9,46 @@
       </ul>
     </div>
   <% end %>
-
   <div>
     <%= form.label :title, style: "display: block" %>
     <%= form.text_field :title %>
   </div>
-
   <div>
     <%= form.label :description, style: "display: block" %>
     <%= form.text_area :description %>
   </div>
-
   <div>
     <%= form.label :category_id, style: "display: block" %>
-    <%= form.text_field :category_id %>
+    <%= form.collection_select :category_id, Category.all, :id, :name, prompt: "Selecione uma categoria" %>
   </div>
-
   <div>
     <%= form.label :priority_id, style: "display: block" %>
-    <%= form.text_field :priority_id %>
+    <%= form.collection_select :priority_id, Priority.all, :id, :name, prompt: "Selecione uma prioridade" %>
   </div>
-
   <div>
     <%= form.label :column_id, style: "display: block" %>
-    <%= form.text_field :column_id %>
+    <%= form.collection_select :column_id, Column.all, :id, :title, prompt: "Selecione uma coluna" %>
   </div>
-
   <div>
     <%= form.label :company_id, style: "display: block" %>
-    <%= form.text_field :company_id %>
+    <%= form.collection_select :company_id, Company.all, :id, :name, prompt: "Selecione uma empresa" %>
   </div>
-
   <div>
     <%= form.label :departament_id, style: "display: block" %>
-    <%= form.text_field :departament_id %>
+    <%= form.collection_select :departament_id, Departament.all, :id, :name, prompt: "Selecione um departamento" %>
   </div>
-
   <div>
     <%= form.label :date_end, style: "display: block" %>
     <%= form.datetime_field :date_end %>
   </div>
-
-  <div>
-    <%= form.label :tag_id, style: "display: block" %>
-    <%= form.text_field :tag_id %>
-  </div>
-
-  <div>
-    <%= form.label :attachment_id, style: "display: block" %>
-    <%= form.text_field :attachment_id %>
-  </div>
-
-  <div>
-    <%= form.label :comment_id, style: "display: block" %>
-    <%= form.text_field :comment_id %>
-  </div>
-
-  <div>
-    <%= form.label :sub_tasks_id, style: "display: block" %>
-    <%= form.text_field :sub_tasks_id %>
-  </div>
-
   <div>
     <%= form.label :automation_hours, style: "display: block" %>
     <%= form.number_field :automation_hours %>
   </div>
-
   <div>
     <%= form.label :execution_hours, style: "display: block" %>
     <%= form.number_field :execution_hours %>
   </div>
-
   <div>
     <%= form.submit %>
   </div>
