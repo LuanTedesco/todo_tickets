@@ -1,7 +1,5 @@
 <p style="color: green"><%= notice %></p>
-
 <h1>Priorities</h1>
-
 <div id="priorities">
   <% @priorities.each do |priority| %>
     <%= render priority %>
@@ -10,5 +8,4 @@
     </p>
   <% end %>
 </div>
-
 <%= link_to "New priority", new_priority_path %>

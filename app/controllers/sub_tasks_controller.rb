@@ -1,25 +1,20 @@
 class SubTasksController < ApplicationController
   before_action :set_sub_task, only: %i[ show edit update destroy ]
 
-  # GET /sub_tasks or /sub_tasks.json
   def index
     @sub_tasks = SubTask.all
   end
 
-  # GET /sub_tasks/1 or /sub_tasks/1.json
   def show
   end
 
-  # GET /sub_tasks/new
   def new
     @sub_task = SubTask.new
   end
 
-  # GET /sub_tasks/1/edit
   def edit
   end
 
-  # POST /sub_tasks or /sub_tasks.json
   def create
     @sub_task = SubTask.new(sub_task_params)
 
@@ -34,7 +29,6 @@ class SubTasksController < ApplicationController
     end
   end
 
-  # PATCH/PUT /sub_tasks/1 or /sub_tasks/1.json
   def update
     respond_to do |format|
       if @sub_task.update(sub_task_params)
@@ -47,7 +41,6 @@ class SubTasksController < ApplicationController
     end
   end
 
-  # DELETE /sub_tasks/1 or /sub_tasks/1.json
   def destroy
     @sub_task.destroy
 
@@ -58,12 +51,10 @@ class SubTasksController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_sub_task
       @sub_task = SubTask.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def sub_task_params
       params.require(:sub_task).permit(:name, :date_end)
     end
