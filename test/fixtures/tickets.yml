@@ -1,0 +1,33 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  description: MyText
+  category: one
+  priority: one
+  column: one
+  company: one
+  departament: one
+  date_end: 2023-08-01 13:52:51
+  tag: one
+  attachment: one
+  comment: one
+  sub_tasks: one
+  automation_hours: 1
+  execution_hours: 1
+
+two:
+  title: MyString
+  description: MyText
+  category: two
+  priority: two
+  column: two
+  company: two
+  departament: two
+  date_end: 2023-08-01 13:52:51
+  tag: two
+  attachment: two
+  comment: two
+  sub_tasks: two
+  automation_hours: 1
+  execution_hours: 1

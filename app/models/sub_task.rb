@@ -1,0 +1,2 @@
+class SubTask < ApplicationRecord
+end
