@@ -16,5 +16,6 @@
       <p class="alert alert-danger"><%= alert %></p>
     <% end %>
     <%= yield %>
+    <%= turbo_frame_tag "bootstrap_modal" %>
   </body>
 </html>
