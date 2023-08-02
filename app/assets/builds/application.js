@@ -3737,7 +3737,7 @@
   function setFormMode(mode) {
     session.setFormMode(mode);
   }
-  var Turbo = /* @__PURE__ */ Object.freeze({
+  var Turbo2 = /* @__PURE__ */ Object.freeze({
     __proto__: null,
     navigator: navigator$1,
     session,
@@ -4372,7 +4372,7 @@
       element = element.parentElement;
     }
   })();
-  window.Turbo = Turbo;
+  window.Turbo = Turbo2;
   start();
 
   // node_modules/@hotwired/turbo-rails/app/javascript/turbo/cable.js
@@ -6800,8 +6800,56 @@
     }
   };
 
+  // app/javascript/controllers/modal_controller.js
+  var modal_controller_default = class extends Controller {
+    connect() {
+      this.modal = new bootstrap.Modal(this.element, {
+        backdrop: "static"
+      });
+      this.modal.show();
+    }
+    disconnect() {
+      this.modal.hide();
+    }
+  };
+
+  // app/javascript/controllers/turbo_controller.js
+  var turbo_controller_default = class extends Controller {
+    connect() {
+      this.element.setAttribute("data-action", "turbo#click");
+    }
+    click(e) {
+      e.preventDefault();
+      this.url = this.element.getAttribute("href");
+      fetch(this.url, {
+        headers: {
+          Accept: "text/vnd.turbo-stream.html"
+        }
+      }).then((response) => response.text()).then((html) => Turbo.renderStreamMessage(html));
+    }
+  };
+
   // app/javascript/controllers/index.js
   application.register("hello", hello_controller_default);
+  application.register("modal", modal_controller_default);
+  application.register("turbo", turbo_controller_default);
+
+  // node_modules/bootstrap/dist/js/bootstrap.esm.js
+  var bootstrap_esm_exports = {};
+  __export(bootstrap_esm_exports, {
+    Alert: () => Alert,
+    Button: () => Button,
+    Carousel: () => Carousel,
+    Collapse: () => Collapse,
+    Dropdown: () => Dropdown,
+    Modal: () => Modal,
+    Offcanvas: () => Offcanvas,
+    Popover: () => Popover,
+    ScrollSpy: () => ScrollSpy,
+    Tab: () => Tab,
+    Toast: () => Toast,
+    Tooltip: () => Tooltip
+  });
 
   // node_modules/@popperjs/core/lib/index.js
   var lib_exports = {};
@@ -11958,6 +12006,9 @@
   };
   enableDismissTrigger(Toast);
   defineJQueryPlugin(Toast);
+
+  // app/javascript/application.js
+  window.bootstrap = bootstrap_esm_exports;
 })();
 /*! Bundled license information:
 
