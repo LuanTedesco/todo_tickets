@@ -7,7 +7,41 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <%= render "tickets/form", ticket: @ticket %>
+          <ul class="nav nav-tabs mb-3">
+            <li class="nav-item">
+              <a class="nav-link active" data-bs-toggle="tab" href="#tab1">Informações do Ticket</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="tab" href="#tab2">Anexos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="tab" href="#tab3">Etiquetas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="tab" href="#tab4">Comentários</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="tab" href="#tab5">Checklist</a>
+            </li>
+          </ul>
+
+          <div class="tab-content">
+            <div class="tab-pane active" id="tab1">
+              <%= render "tickets/form", ticket: @ticket %>
+            </div>
+            <div class="tab-pane" id="tab2">
+              <!-- Content for Tab 2 -->
+            </div>
+            <div class="tab-pane" id="tab3">
+              <!-- Content for Tab 3 -->
+            </div>
+            <div class="tab-pane" id="tab4">
+              <!-- Content for Tab 3 -->
+            </div>
+            <div class="tab-pane" id="tab5">
+              <!-- Content for Tab 3 -->
+            </div>
+          </div>
         </div>
       </div>
     </div>
