@@ -1,42 +1,46 @@
-<%= link_to "New ticket", new_ticket_path, "data-controller":"turbo" %>
-<div class="row">
-  <div class="col-md-3">
-    <div class="card bg-light">
-      <div class="card-header">Aguardando</div>
-      <div class="card-body">
-        <% @tickets.where(column: 3).each do |ticket| %>
-          <%= link_to ticket.title, edit_ticket_path(ticket) %>
-        <% end %>
+<div class="p-5">
+  <div class="d-flex justify-content-end">
+    <%= link_to "New ticket", new_ticket_path, "data-controller":"turbo", class: "btn btn-primary btn-lg" %>
+  </div>
+  <div class="row pt-3">
+    <div class="col-md-3">
+      <div class="card ">
+        <div class="card-header text-primary mb-2">Aguardando</div>
+        <div class="card-body">
+          <% @tickets.where(column: 3).each do |ticket| %>
+            <%= link_to ticket.title, edit_ticket_path(ticket) %>
+          <% end %>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="col-md-3">
-    <div class="card bg-light">
-      <div class="card-header">Desenvolvendo</div>
-      <div class="card-body">
-        <% @tickets.where(column: 4).each do |ticket| %>
-          <%= link_to ticket.title, edit_ticket_path(ticket) %>
-        <% end %>
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-header text-primary mb-2">Desenvolvendo</div>
+        <div class="card-body">
+          <% @tickets.where(column: 4).each do |ticket| %>
+            <%= link_to ticket.title, edit_ticket_path(ticket) %>
+          <% end %>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="col-md-3">
-    <div class="card bg-light">
-      <div class="card-header">Testando</div>
-      <div class="card-body">
-        <% @tickets.where(column: 5).each do |ticket| %>
-          <%= link_to ticket.title, edit_ticket_path(ticket) %>
-        <% end %>
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-header text-primary mb-2">Testando</div>
+        <div class="card-body">
+          <% @tickets.where(column: 5).each do |ticket| %>
+            <%= link_to ticket.title, edit_ticket_path(ticket) %>
+          <% end %>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="col-md-3">
-    <div class="card bg-light">
-      <div class="card-header">Pronto</div>
-      <div class="card-body">
-        <% @tickets.where(column: 6).each do |ticket| %>
-          <%= link_to ticket.title, edit_ticket_path(ticket) %>
-        <% end %>
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-header text-primary mb-2">Pronto</div>
+        <div class="card-body">
+          <% @tickets.where(column: 6).each do |ticket| %>
+            <%= link_to ticket.title, edit_ticket_path(ticket) %>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
