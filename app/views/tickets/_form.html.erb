@@ -1,55 +1,70 @@
 <%= form_with(model: ticket) do |form| %>
-  <% if ticket.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(ticket.errors.count, "error") %> prohibited this ticket from being saved:</h2>
-      <ul>
-        <% ticket.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+  <div class="row p-2">
+    <div class="col-lg-12">
+      <% if ticket.errors.any? %>
+        <div style="color: red">
+          <h2><%= pluralize(ticket.errors.count, "error") %> prohibited this ticket from being saved:</h2>
+          <ul>
+            <% ticket.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <div class="form-row">
+        <div class="form-group col-md-12 mb-3 px-1">
+          <%= form.label :title, style: "display: block", class: "small pb-1" %>
+          <%= form.text_field :title, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12 mb-3 px-1">
+          <%= form.label :description, style: "display: block", class: "small pb-1" %>
+          <%= form.text_area :description, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-row d-flex mb-3">
+        <div class="form-group col-md-4 px-1">
+          <%= form.label :category_id, style: "display: block", class: "small pb-1" %>
+          <%= form.collection_select :category_id, Category.all, :id, :name, { prompt: "Selecione uma categoria" }, class: "form-select" %>
+        </div>
+        <div class="form-group col-md-4 px-1">
+          <%= form.label :priority_id, style: "display: block", class: "small pb-1" %>
+          <%= form.collection_select :priority_id, Priority.all, :id, :name, { prompt: "Selecione uma prioridade" }, class: "form-select" %>
+        </div>
+        <div class="form-group col-md-4 px-1">
+          <%= form.label :column_id, style: "display: block", class: "small pb-1" %>
+          <%= form.collection_select :column_id, Column.all, :id, :title, { prompt: "Selecione um status" }, class: "form-select" %>
+        </div>
+      </div>
+      <div class="form-row d-flex mb-3">
+        <div class="form-group col-md-8 px-1">
+          <%= form.label :company_id, style: "display: block", class: "small pb-1" %>
+          <%= form.collection_select :company_id, Company.all, :id, :name, { prompt: "Selecione uma empresa" }, class: "form-select" %>
+        </div>
+        <div class="form-group col-md-4 px-1">
+          <%= form.label :departament_id, style: "display: block", class: "small pb-1" %>
+          <%= form.collection_select :departament_id, Departament.all, :id, :name, { prompt: "Selecione um departamento" }, class: "form-select" %>
+        </div>
+      </div>
+      <div class="form-row d-flex mb-3">
+        <div class="form-group col-md-4 px-1">
+          <%= form.label :date_end, style: "display: block", class: "small pb-1" %>
+          <%= form.datetime_field :date_end, class: "form-control" %>
+        </div>
+        <div class="form-group col-md-4 px-1">
+          <%= form.label :automation_hours, style: "display: block", class: "small pb-1" %>
+          <%= form.number_field :automation_hours, class: "form-control" %>
+        </div>
+        <div class="form-group col-md-4 px-1">
+          <%= form.label :execution_hours, style: "display: block", class: "small pb-1" %>
+          <%= form.number_field :execution_hours, class: "form-control" %>
+        </div>
+      </div>
+      <div class="form-row d-flex justify-content-between py-3 px-1">
+        <button type="button" class="btn btn-danger btn-md" data-bs-dismiss="modal">Cancel</button>
+        <%= form.submit class: "btn btn-primary btn-md" %>
+      </div>
     </div>
-  <% end %>
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
-  </div>
-  <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.text_area :description %>
-  </div>
-  <div>
-    <%= form.label :category_id, style: "display: block" %>
-    <%= form.collection_select :category_id, Category.all, :id, :name, prompt: "Selecione uma categoria" %>
-  </div>
-  <div>
-    <%= form.label :priority_id, style: "display: block" %>
-    <%= form.collection_select :priority_id, Priority.all, :id, :name, prompt: "Selecione uma prioridade" %>
-  </div>
-  <div>
-    <%= form.label :column_id, style: "display: block" %>
-    <%= form.collection_select :column_id, Column.all, :id, :title, prompt: "Selecione uma coluna" %>
-  </div>
-  <div>
-    <%= form.label :company_id, style: "display: block" %>
-    <%= form.collection_select :company_id, Company.all, :id, :name, prompt: "Selecione uma empresa" %>
-  </div>
-  <div>
-    <%= form.label :departament_id, style: "display: block" %>
-    <%= form.collection_select :departament_id, Departament.all, :id, :name, prompt: "Selecione um departamento" %>
-  </div>
-  <div>
-    <%= form.label :date_end, style: "display: block" %>
-    <%= form.datetime_field :date_end %>
-  </div>
-  <div>
-    <%= form.label :automation_hours, style: "display: block" %>
-    <%= form.number_field :automation_hours %>
-  </div>
-  <div>
-    <%= form.label :execution_hours, style: "display: block" %>
-    <%= form.number_field :execution_hours %>
-  </div>
-  <div>
-    <%= form.submit %>
   </div>
 <% end %>
