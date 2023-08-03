@@ -19,7 +19,19 @@ class UsersController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+    @user = User.find(params[:id])
+  end
+
+  def update
+    @user = User.find(params[:id])
+
+    if @user.update(user_params) # Usar o método "update" para salvar as alterações
+      redirect_to users_path, notice: 'User was successfully updated.'
+    else
+      render :edit
+    end
+  end
 
   def show; end
 
