@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_user, only: %i[show edit update destroy]
+  before_action :authorize_admin, only: %i[index new create edit update destroy]
   def index
     @users = User.all
   end
@@ -32,6 +32,13 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation)
+    params.require(:user).permit(:email, :password, :password_confirmation, :admin)
+  end
+
+  def authorize_admin
+    return if current_user&.admin?
+
+    flash[:alert] = 'Apenas administradores podem realizar esta ação.'
+    redirect_to root_path
   end
 end
