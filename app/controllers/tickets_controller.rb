@@ -1,4 +1,5 @@
 class TicketsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_ticket, only: %i[show edit update destroy]
 
   def index
@@ -16,13 +17,11 @@ class TicketsController < ApplicationController
   def create
     @ticket = Ticket.new(ticket_params)
 
-    respond_to do |format|
       if @ticket.save
         redirect_to tickets_path, notice: 'Ticket was successfully created.'
       else
         render :new, status: :unprocessable_entity
       end
-    end
   end
 
   def update

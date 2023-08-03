@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!
+  before_action :set_user, only: %i[show edit update destroy]
   def index
     @users = User.all
   end
@@ -17,9 +19,9 @@ class UsersController < ApplicationController
     end
   end
 
-  def edit
-    @user = User.find(params[:id])
-  end
+  def edit; end
+
+  def show; end
 
   def destroy
     @user = User.find(params[:id])
