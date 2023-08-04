@@ -18,36 +18,25 @@ class ColumnsController < ApplicationController
   def create
     @column = Column.new(column_params)
 
-    respond_to do |format|
-      if @column.save
-        format.html { redirect_to column_url(@column), notice: 'Column was successfully created.' }
-        format.json { render :show, status: :created, location: @column }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @column.errors, status: :unprocessable_entity }
-      end
+    if @column.save
+      redirect_to columns_path, notice: 'Column was successfully created.'
+
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
   def update
-    respond_to do |format|
-      if @column.update(column_params)
-        format.html { redirect_to column_url(@column), notice: 'Column was successfully updated.' }
-        format.json { render :show, status: :ok, location: @column }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @column.errors, status: :unprocessable_entity }
-      end
+    if @column.update(column_params)
+      redirect_to columns_path, notice: 'Column was successfully updated.'
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     @column.destroy
-
-    respond_to do |format|
-      format.html { redirect_to columns_url, notice: 'Column was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to columns_path, notice: 'Column was successfully destroyed.'
   end
 
   private
@@ -57,6 +46,6 @@ class ColumnsController < ApplicationController
   end
 
   def column_params
-    params.require(:column).permit(:title)
+    params.require(:column).permit(:title, :description, :level, :status, :visible)
   end
 end

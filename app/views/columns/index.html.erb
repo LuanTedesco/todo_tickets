@@ -1,14 +1,42 @@
-<p style="color: green"><%= notice %></p>
-
-<h1>Columns</h1>
-
-<div id="columns">
-  <% @columns.each do |column| %>
-    <%= render column %>
-    <p>
-      <%= link_to "Show this column", column %>
-    </p>
-  <% end %>
-</div>
-
-<%= link_to "New column", new_column_path %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Columns</title>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="d-flex justify-content-end align-items-center mb-3">
+        <%= link_to "New Column", new_column_path, "data-controller":"turbo", class: "btn btn-primary btn-sm" %>
+      </div>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Level</th>
+              <th>Status</th>
+              <th>Visible</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @columns.each do |column| %>
+              <tr>
+                <td><%= column.title %></td>
+                <td><%= column.description %></td>
+                <td><%= column.level %></td>
+                <td><%= column.status ? 'Active' : 'Inactive' %></td>
+                <td><%= column.visible ? 'Yes' : 'No' %></td>
+                <td>
+                  <%= link_to 'Edit', edit_column_path(column), "data-controller":"turbo", class: "btn btn-primary btn-sm" %>
+                  <%= link_to "Destroy", column_path(column), method: :delete, class: 'btn btn-danger btn-sm', data: { turbo_method: :delete, turbo_confirm: 'You sure?' } %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
