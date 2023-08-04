@@ -54,6 +54,6 @@ class TicketsController < ApplicationController
 
   def ticket_params
     params.require(:ticket).permit(:title, :description, :category_id, :priority_id, :column_id, :company_id,
-                                   :departament_id, :date_end, :automation_hours, :execution_hours)
+                                   :departament_id, :date_end, :automation_hours, :execution_hours, attachments: [ :tempfile, :content_type, :original_filename, :headers ])
   end
 end

@@ -17,7 +17,7 @@
       <div class="card">
         <div class="card-header text-primary mb-2">Desenvolvendo</div>
         <div class="card-body">
-          <% @tickets.where(column: 2).each do |ticket| %>
+          <% @tickets.where(column: 1).each do |ticket| %>
             <%= link_to ticket.title, edit_ticket_path(ticket) %>
           <% end %>
         </div>

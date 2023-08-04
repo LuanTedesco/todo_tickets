@@ -26,7 +26,7 @@
       <div class="form-row d-flex">
         <div class="form-group col-md-6 mb-3 px-1">
           <%= form.label :file, style: "display: block", class: "small pb-1" %>
-          <%= form.file_field :file, class: "form-control" %>
+          <%= form.file_field :file, multiple: true, class: "form-control" %>
         </div>
         <div class="form-group col-md-6 mb-3 px-1">
           <%= form.label :status, style: "display: block", class: "small pb-1" %>
