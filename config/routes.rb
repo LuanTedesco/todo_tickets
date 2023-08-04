@@ -12,4 +12,6 @@ Rails.application.routes.draw do
   resources :categories
   resources :priorities
   resources :companies
+
+  delete "files/:id/destroy", to: "files#destroy", as: "destroy_file"
 end
