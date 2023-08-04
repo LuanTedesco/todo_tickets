@@ -25,6 +25,8 @@ gem 'redis', '~> 4.0'
 
 gem 'devise'
 
+gem 'activestorage'
+
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'bootsnap', require: false
