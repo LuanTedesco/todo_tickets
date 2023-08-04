@@ -1,14 +1,38 @@
-<p style="color: green"><%= notice %></p>
-
-<h1>Departaments</h1>
-
-<div id="departaments">
-  <% @departaments.each do |departament| %>
-    <%= render departament %>
-    <p>
-      <%= link_to "Show this departament", departament %>
-    </p>
-  <% end %>
-</div>
-
-<%= link_to "New departament", new_departament_path %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Departaments</title>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="d-flex justify-content-end align-items-center mb-3">
+        <%= link_to "New Departament", new_departament_path, "data-controller":"turbo", class: "btn btn-primary btn-sm" %>
+      </div>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @departaments.each do |departament| %>
+              <tr>
+                <td><%= departament.name %></td>
+                <td><%= departament.description %></td>
+                <td><%= departament.status ? 'Active' : 'Inactive' %></td>
+                <td>
+                  <%= link_to 'Edit', edit_departament_path(departament), "data-controller":"turbo", class: "btn btn-primary btn-sm" %>
+                  <%= link_to "Destroy", departament_path(departament), method: :delete, class: 'btn btn-danger btn-sm', data: { turbo_method: :delete, turbo_confirm: 'You sure?' } %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
