@@ -2,48 +2,50 @@ class UsersController < ApplicationController
   layout 'application_tickets'
   before_action :authenticate_user!
   before_action :authorize_admin, only: %i[index new create edit update destroy]
+  before_action :set_tag, only: %i[show edit update destroy]
 
   def index
     @users = User.all
   end
 
+  def show; end
+
   def new
     @user = User.new
   end
+
+  def edit; end
 
   def create
     @user = User.new(user_params)
 
     if @user.save
-      redirect_to root_path, notice: 'User was successfully created.'
+      redirect_to users_path, notice: 'User was successfully created.'
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
-  end
-
-  def edit
-    @user = User.find(params[:id])
   end
 
   def update
     @user = User.find(params[:id])
 
-    if @user.update(user_params) # Usar o método "update" para salvar as alterações
+    if @user.update(user_params)
       redirect_to users_path, notice: 'User was successfully updated.'
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
-  def show; end
-
   def destroy
-    @user = User.find(params[:id])
     @user.destroy
     redirect_to users_path, notice: 'Usuário excluído com sucesso!'
   end
 
   private
+
+  def set_user
+    @user = User.find(params[:id])
+  end
 
   def user_params
     params.require(:user).permit(:email, :password, :password_confirmation, :admin)

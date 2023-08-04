@@ -17,37 +17,24 @@ class SubTasksController < ApplicationController
 
   def create
     @sub_task = SubTask.new(sub_task_params)
-
-    respond_to do |format|
-      if @sub_task.save
-        format.html { redirect_to sub_task_url(@sub_task), notice: 'Sub task was successfully created.' }
-        format.json { render :show, status: :created, location: @sub_task }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @sub_task.errors, status: :unprocessable_entity }
-      end
+    if @sub_task.save
+      redirect_to sub_tasks_path, notice: 'Sub task was successfully created.'
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
   def update
-    respond_to do |format|
-      if @sub_task.update(sub_task_params)
-        format.html { redirect_to sub_task_url(@sub_task), notice: 'Sub task was successfully updated.' }
-        format.json { render :show, status: :ok, location: @sub_task }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @sub_task.errors, status: :unprocessable_entity }
-      end
+    if @sub_task.update(sub_task_params)
+      redirect_to sub_tasks_path, notice: 'Sub task was successfully updated.'
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     @sub_task.destroy
-
-    respond_to do |format|
-      format.html { redirect_to sub_tasks_url, notice: 'Sub task was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    redirect_to sub_tasks_path, notice: 'Sub task was successfully destroyed.'
   end
 
   private
