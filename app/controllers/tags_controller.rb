@@ -1,4 +1,5 @@
 class TagsController < ApplicationController
+  layout 'application_tickets'
   before_action :authenticate_user!
   before_action :set_tag, only: %i[show edit update destroy]
 

@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
+  layout 'application_tickets'
   before_action :authenticate_user!
   before_action :authorize_admin, only: %i[index new create edit update destroy]
+
   def index
     @users = User.all
   end

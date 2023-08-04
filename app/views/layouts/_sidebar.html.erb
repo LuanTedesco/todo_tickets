@@ -1,0 +1,67 @@
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+  <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<%= tickets_path %>">
+    <div class="sidebar-brand-icon">
+      <i class="fas fa-robot"></i>
+    </div>
+    <div class="sidebar-brand-text mx-2">Tickets</div>
+  </a>
+  <hr class="sidebar-divider my-0">
+  <li class="nav-item active">
+    <%= link_to tickets_path, class: "nav-link" do %>
+      <i class="fas fa-chart-line"></i>
+      <span>Tickets</span>
+    <% end %>
+  </li>
+  <hr class="sidebar-divider my-0">
+  <li class="nav-item active">
+    <%= link_to tickets_path, class: "nav-link" do %>
+      <i class="fas fa-chart-line"></i>
+      <span>Dashboard</span>
+    <% end %>
+  </li>
+  <hr class="sidebar-divider my-0">
+  <li class="nav-item active">
+    <%= link_to companies_path, class: "nav-link" do %>
+      <i class="fas fa-chart-line"></i>
+      <span>Companies</span>
+    <% end %>
+  </li>
+  <hr class="sidebar-divider my-0">
+  <li class="nav-item active">
+    <%= link_to departaments_path, class: "nav-link" do %>
+      <i class="fas fa-chart-line"></i>
+      <span>Departament</span>
+    <% end %>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+        aria-expanded="true" aria-controls="collapseTwo">
+      <i class="fas fa-user-check"></i>
+      <span>Config</span>
+    </a>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+      <div class="bg-white py-2 collapse-inner rounded">
+        <%= link_to categories_path, class: "collapse-item" do %>
+          <i class="fas fa-check"></i>
+          <span>Categories</span>
+        <% end %>
+        <%= link_to columns_path, class: "collapse-item" do %>
+          <i class="fas fa-bars"></i>
+          <span>Columns</span>
+        <% end %>
+        <%= link_to priorities_path, class: "collapse-item" do %>
+          <i class="fas fa-hourglass-end"></i>
+          <span>Priorities</span>
+        <% end %>
+        <%= link_to tags_path, class: "collapse-item" do %>
+          <i class="fas fa-hourglass-end"></i>
+          <span>Tags</span>
+        <% end %>
+      </div>
+    </div>
+  </li>
+  <hr class="sidebar-divider">
+  <div class="text-center d-none d-md-inline">
+    <button class="rounded-circle border-0" id="sidebarToggle"></button>
+  </div>
+</ul>

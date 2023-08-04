@@ -1,4 +1,5 @@
 class DepartamentsController < ApplicationController
+  layout 'application_tickets'  
   before_action :authenticate_user!
   before_action :set_departament, only: %i[show edit update destroy]
 

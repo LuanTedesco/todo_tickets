@@ -1,4 +1,5 @@
 class PrioritiesController < ApplicationController
+  layout 'application_tickets'
   before_action :authenticate_user!
   before_action :set_priority, only: %i[show edit update destroy]
 
