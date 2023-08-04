@@ -1,4 +1,5 @@
 class TicketsController < ApplicationController
+  layout 'application_tickets'
   before_action :authenticate_user!
   before_action :set_ticket, only: %i[show edit update destroy]
 

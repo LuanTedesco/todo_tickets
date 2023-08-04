@@ -1,4 +1,5 @@
 class SubTasksController < ApplicationController
+  layout 'application_tickets'
   before_action :authenticate_user!
   before_action :set_sub_task, only: %i[show edit update destroy]
 
