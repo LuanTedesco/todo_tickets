@@ -1,14 +1,36 @@
-<p style="color: green"><%= notice %></p>
-
-<h1>Companies</h1>
-
-<div id="companies">
-  <% @companies.each do |company| %>
-    <%= render company %>
-    <p>
-      <%= link_to "Show this company", company %>
-    </p>
-  <% end %>
-</div>
-
-<%= link_to "New company", new_company_path %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Companies</title>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="d-flex justify-content-end align-items-center mb-3">
+        <%= link_to "New Company", new_company_path, "data-controller":"turbo", class: "btn btn-primary btn-sm" %>
+      </div>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @companies.each do |company| %>
+              <tr>
+                <td><%= company.name %></td>
+                <td><%= company.status ? 'Active' : 'Inactive' %></td>
+                <td>
+                  <%= link_to 'Edit', edit_company_path(company), "data-controller":"turbo", class: "btn btn-primary btn-sm" %>
+                  <%= link_to "Destroy", company_path(company), method: :delete, class: 'btn btn-danger btn-sm', data: { turbo_method: :delete, turbo_confirm: 'You sure?' } %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
