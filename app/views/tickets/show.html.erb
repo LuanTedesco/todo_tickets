@@ -1,9 +1,19 @@
 <p style="color: green"><%= notice %></p>
 
+<%= @ticket.files.attached? %>
 <%= render @ticket %>
 
+<% if @ticket.files.attached? %>
+    <% @ticket.files.each do |attachment| %>
+      <br>
+        <%= link_to attachment.filename, rails_blob_path(attachment, disposition: "attachment") %>
+      <br>
+      <%= button_to "Delete attachment", destroy_file_path(attachment), method: :delete %>
+    <% end %>
+  <% end %>
+
 <div>
-  <%= link_to "Edit this ticket", edit_ticket_path(@ticket) %> |
+  <%= link_to "Edit this ticket", edit_ticket_path(@ticket) %>
   <%= link_to "Back to tickets", tickets_path %>
 
   <%= button_to "Destroy this ticket", @ticket, method: :delete %>

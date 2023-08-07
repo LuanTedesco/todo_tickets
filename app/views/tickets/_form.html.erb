@@ -61,6 +61,12 @@
           <%= form.number_field :execution_hours, class: "form-control" %>
         </div>
       </div>
+      <div class="form-row">
+        <div class="form-group">
+          <%= form.label :files, style: "display: block", class: "small pb-1" %>
+          <%= form.file_field :files, multiple: true, class: "form-control" %>
+        </div>
+      </div>
       <div class="form-row d-flex justify-content-between py-3 px-1">
         <button type="button" class="btn btn-danger btn-md" data-bs-dismiss="modal">Cancel</button>
         <%= form.submit class: "btn btn-primary btn-md" %>
