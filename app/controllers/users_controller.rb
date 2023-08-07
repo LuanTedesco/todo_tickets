@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   layout 'application_tickets'
   before_action :authenticate_user!
   before_action :authorize_admin, only: %i[index new create edit update destroy]
-  before_action :set_tag, only: %i[show edit update destroy]
+  before_action :set_user, only: %i[show edit update destroy]
 
   def index
     @users = User.all
@@ -48,7 +48,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :admin)
+    params.require(:user).permit(:name, :email, :departament_id, :password, :password_confirmation, :admin)
   end
 
   def authorize_admin
