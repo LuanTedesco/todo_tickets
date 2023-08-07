@@ -1,24 +1,42 @@
-  
-<h1>Lista de Usuários</h1>
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Email</th>
-      <th>Ações</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @users.each do |user| %>
-      <tr>
-        <td><%= user.id %></td>
-        <td><%= user.email %></td>
-        <td>
-          <%= link_to 'Editar', edit_user_path(user) %>
-          <%= link_to 'Excluir', user_path(user), method: :delete, data: { confirm: 'Tem certeza?' } %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-<%= link_to 'New User', new_user_path %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Users</title>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="d-flex justify-content-end align-items-center mb-3">
+        <%= link_to "New User", new_user_path, "data-controller":"turbo", class: "btn btn-primary btn-sm" %>
+      </div>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Departament</th>
+              <th>Admin</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @users.each do |user| %>
+              <tr>
+                <td><%= user.name %></td>
+                <td><%= user.email %></td>
+                <td><%= user.departament_id %></td>
+                <td><%= user.admin ? 'Yes' : 'No' %></td>
+                <td><%= user.status ? 'Active' : 'Inactive' %></td>
+                <td>
+                  <%= link_to 'Edit', edit_user_path(user), "data-controller":"turbo", class: "btn btn-primary btn-sm" %>
+                  <%= link_to "Destroy", user_path(user), method: :delete, class: 'btn btn-danger btn-sm', data: { turbo_method: :delete, turbo_confirm: 'You sure?' } %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
