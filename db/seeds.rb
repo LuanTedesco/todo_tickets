@@ -2,7 +2,14 @@ Departament.create(name: 'TI', description: 'Tecnologia da Informação')
 Category.create(name: 'Desenvolvimento', description: 'Desenvolvimento', departament_id: 1, status: true)
 Company.create(name: 'Razonet', cnpj: '12345678901234', status: true)
 
-User.create(name: 'Admin', email: 'admin@admin.com', departament_id: 1, password: '123456',
+default_image = Rails.root.join('app/assets/images/default-avatar.png')
+default_blob = ActiveStorage::Blob.create_and_upload!(
+  io: File.open(default_image, 'rb'),
+  filename: 'default-avatar.png',
+  content_type: 'image/png'
+)
+
+User.create(name: 'Admin', email: 'admin@admin.com', departament_id: 1, avatar: default_blob, password: '123456',
             password_confirmation: '123456', admin: true)
 
 Column.create(title: 'Aguardando', description: 'Aguardando', level: 1, visible: true)

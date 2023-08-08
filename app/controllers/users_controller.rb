@@ -38,7 +38,7 @@ class UsersController < ApplicationController
 
   def destroy
     @user.destroy
-    redirect_to users_path, notice: 'Usuário excluído com sucesso!'
+    redirect_to users_path, notice: 'User deleted sucessfull'
   end
 
   private
@@ -48,7 +48,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:name, :email, :departament_id, :password, :password_confirmation, :admin)
+    params.require(:user).permit(:name, :email, :departament_id, :password, :password_confirmation, :admin, :avatar)
   end
 
   def authorize_admin

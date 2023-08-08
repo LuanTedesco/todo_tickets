@@ -55,7 +55,11 @@
     <li class="nav-item dropdown no-arrow">
       <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <span class="mr-2 d-none d-lg-inline text-gray-600 small"><%= current_user.email %></span>
-        <%#= image_tag('robot.png', class: 'img-profile rounded-circle') %>
+        <% if current_user.avatar.attached? %>
+          <%= image_tag current_user.avatar, class: 'img-profile rounded-circle' %>
+        <% else %>
+          <%= image_tag 'default-avatar.png', class: 'img-profile rounded-circle' %>
+        <% end %>
       </a>
       <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
         <a class="dropdown-item" href="#">
