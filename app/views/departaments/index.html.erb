@@ -24,9 +24,9 @@
                 <td><%= departament.name %></td>
                 <td><%= departament.description %></td>
                 <td><%= departament.status ? 'Active' : 'Inactive' %></td>
-                <td>
+                <td class="text-right">
                   <%= link_to 'Edit', edit_departament_path(departament), "data-controller":"turbo", class: "btn btn-primary btn-sm" %>
-                  <%= link_to "Destroy", departament_path(departament), method: :delete, class: 'btn btn-danger btn-sm', data: { turbo_method: :delete, turbo_confirm: 'You sure?' } %>
+                  <%= link_to "Destroy", departament_path(departament), method: :delete, class: 'btn btn-danger btn-sm mr-3', data: { turbo_method: :delete, turbo_confirm: 'You sure?' } %>
                 </td>
               </tr>
             <% end %>

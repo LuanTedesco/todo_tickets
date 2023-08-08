@@ -32,7 +32,7 @@
   <div class="form-group row">
     <div class="col-md-4">
       <%= f.label :departament_id, class: "control-label" %>
-      <%= f.collection_select :departament_id, Departament.all, :id, :name, { prompt: "Selecione um departamento"}, class: "form-select" %>
+      <%= f.collection_select :departament_id, Departament.all, :id, :name, { prompt: "Select Departament"}, class: "form-select" %>
     </div>
     <div class="col-md-4">
       <%= f.label :status, class: "control-label" %>

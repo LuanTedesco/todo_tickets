@@ -17,13 +17,15 @@
     <%= f.label :description, class: "control-label" %>
     <%= f.text_area :description, class: "form-control" %>
   </div>
-  <div class="form-group">
-    <%= f.label :departament_id, class: "control-label" %>
-    <%= f.collection_select :departament_id, Departament.all, :id, :name, { prompt: "Selecione um departamento"}, class: "form-select" %>
-  </div>
-  <div class="form-group">
-    <%= f.label :status, class: "control-label" %>
-    <%= f.select :status, [['Active', true], ['Inactive', false]], {}, class: "form-control" %>
+  <div class="form-group row">
+    <div class="col-md-6">
+      <%= f.label :departament_id, class: "control-label" %>
+      <%= f.collection_select :departament_id, Departament.all, :id, :name, { prompt: "Select departament"}, class: "form-select" %>
+    </div>
+    <div class="col-md-6">
+      <%= f.label :status, class: "control-label" %>
+      <%= f.select :status, [['Active', true], ['Inactive', false]], {}, class: "form-control" %>
+    </div>
   </div>
   <div class="form-group d-flex justify-content-end">
     <%= f.submit "Save", class: "btn btn-primary" %>

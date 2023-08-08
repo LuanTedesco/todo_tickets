@@ -17,17 +17,19 @@
     <%= f.label :description, class: "control-label" %>
     <%= f.text_area :description, class: "form-control" %>
   </div>
-  <div class="form-group">
-    <%= f.label :level, class: "control-label" %>
-    <%= f.number_field :level, class: "form-control" %>
-  </div>
-  <div class="form-group">
-    <%= f.label :status, class: "control-label" %>
-    <%= f.select :status, [['Active', true], ['Inactive', false]], {}, class: "form-control" %>
-  </div>
-  <div class="form-group">
-    <%= f.label :visible, class: "control-label" %>
-    <%= f.select :visible, [['Yes', true], ['No', false]], {}, class: "form-control" %>
+  <div class="form-group row">
+    <div class="col-md-4">
+      <%= f.label :level, class: "control-label" %>
+      <%= f.number_field :level, class: "form-control" %>
+    </div>
+    <div class="col-md-4">
+      <%= f.label :status, class: "control-label" %>
+      <%= f.select :status, [['Active', true], ['Inactive', false]], {}, class: "form-control" %>
+    </div>
+    <div class="col-md-4">
+      <%= f.label :visible, class: "control-label" %>
+      <%= f.select :visible, [['Yes', true], ['No', false]], {}, class: "form-control" %>
+    </div>
   </div>
   <div class="form-group d-flex justify-content-end">
     <%= f.submit "Save", class: "btn btn-primary" %>

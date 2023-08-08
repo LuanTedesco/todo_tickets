@@ -26,9 +26,9 @@
                 <td><%= priority.description %></td>
                 <td><%= priority.level %></td>
                 <td><%= priority.status ? 'Active' : 'Inactive' %></td>
-                <td>
+                <td class="text-right">
                   <%= link_to 'Edit', edit_priority_path(priority), "data-controller":"turbo", class: "btn btn-primary btn-sm" %>
-                  <%= link_to "Destroy", priority_path(priority), method: :delete, class: 'btn btn-danger btn-sm', data: { turbo_method: :delete, turbo_confirm: 'You sure?' } %>
+                  <%= link_to "Destroy", priority_path(priority), method: :delete, class: 'btn btn-danger btn-sm mr-3', data: { turbo_method: :delete, turbo_confirm: 'You sure?' } %>
                 </td>
               </tr>
             <% end %>
