@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_08_000442) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_08_111542) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -57,6 +57,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_08_000442) do
     t.boolean "status", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "departament_id", null: false
+    t.index ["departament_id"], name: "index_categories_on_departament_id"
   end
 
   create_table "columns", force: :cascade do |t|
@@ -81,7 +83,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_08_000442) do
     t.boolean "status", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "cnpj", default: "", null: false
+    t.string "cnpj", null: false
   end
 
   create_table "departaments", force: :cascade do |t|
@@ -157,7 +159,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_08_000442) do
     t.datetime "updated_at", null: false
     t.boolean "admin"
     t.bigint "departament_id", null: false
-    t.string "name", default: "", null: false
+    t.string "name", null: false
     t.boolean "status", default: true, null: false
     t.index ["departament_id"], name: "index_users_on_departament_id"
     t.index ["email"], name: "index_users_on_email", unique: true
@@ -166,6 +168,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_08_000442) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "categories", "departaments"
   add_foreign_key "tickets", "attachments"
   add_foreign_key "tickets", "categories"
   add_foreign_key "tickets", "columns"
