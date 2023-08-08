@@ -22,7 +22,7 @@
   <hr class="sidebar-divider my-0">
   <li class="nav-item active">
     <%= link_to companies_path, class: "nav-link" do %>
-      <i class="fa-regular fa-building"></i>
+      <i class="fa-solid fa-building"></i>
       <span>Companies</span>
     <% end %>
   </li>
@@ -30,14 +30,24 @@
   <li class="nav-item active">
     <%= link_to departaments_path, class: "nav-link" do %>
       <i class="fa-solid fa-archway"></i>
-      <span>Departament</span>
+      <span>Departaments</span>
     <% end %>
   </li>
+  <% if current_user.admin? %>
+    <hr class="sidebar-divider my-0">
+    <li class="nav-item active">
+      <%= link_to users_path, class: "nav-link" do %>
+        <i class="fa-solid fa-user"></i>
+        <span>Users</span>
+      <% end %>
+    </li>
+  <% end %>
+  <hr class="sidebar-divider my-0">
   <li class="nav-item">
     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
         aria-expanded="true" aria-controls="collapseTwo">
       <i class="fa-solid fa-gear"></i>
-      <span>Config</span>
+      <span>Configs</span>
     </a>
     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
       <div class="bg-white py-2 collapse-inner rounded">
