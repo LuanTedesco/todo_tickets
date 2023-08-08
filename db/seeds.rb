@@ -1,6 +1,6 @@
 Departament.create(name: 'TI', description: 'Tecnologia da Informação')
+Category.create(name: 'Desenvolvimento', description: 'Desenvolvimento', departament_id: 1, status: true)
 Company.create(name: 'Razonet', cnpj: '12345678901234', status: true)
-Category.create(name: 'Desenvolvimento', description: 'Desenvolvimento', status: true)
 
 User.create(name: 'Admin', email: 'admin@admin.com', departament_id: 1, password: '123456',
             password_confirmation: '123456', admin: true)
