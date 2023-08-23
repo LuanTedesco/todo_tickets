@@ -1,5 +1,5 @@
 Departament.create(name: 'TI', description: 'Tecnologia da Informação')
-Category.create(name: 'Desenvolvimento', description: 'Desenvolvimento', departament_id: 1, status: true)
+Category.create(name: 'Developing', description: 'Developing', departament_id: 1, status: true)
 Company.create(name: 'Razonet', cnpj: '12345678901234', status: true)
 
 default_image = Rails.root.join('app/assets/images/default-avatar.png')
@@ -12,11 +12,11 @@ default_blob = ActiveStorage::Blob.create_and_upload!(
 User.create(name: 'Admin', email: 'admin@admin.com', departament_id: 1, avatar: default_blob, password: '123456',
             password_confirmation: '123456', admin: true)
 
-Column.create(title: 'Aguardando', description: 'Aguardando', level: 1, visible: true)
-Column.create(title: 'Desenvolvendo', description: 'Desenvolvendo', level: 2, visible: true)
-Column.create(title: 'Testando', description: 'Testando', level: 3, visible: true)
-Column.create(title: 'Pronto', description: 'Pronto', level: 4, visible: true)
-Column.create(title: 'Arquivo Morto', description: 'Arquivo Morto', level: 5, visible: false)
+Column.create(title: 'Waiting', description: 'Waiting', level: 1, visible: true)
+Column.create(title: 'Developing', description: 'Developing', level: 2, visible: true)
+Column.create(title: 'Testing', description: 'Testing', level: 3, visible: true)
+Column.create(title: 'Ready', description: 'Ready', level: 4, visible: true)
+Column.create(title: 'Dead file', description: 'Dead file', level: 5, visible: false)
 
 Priority.create(name: 'Baixa', description: 'Baixa', level: 1)
 Priority.create(name: 'Média', description: 'Media', level: 2)

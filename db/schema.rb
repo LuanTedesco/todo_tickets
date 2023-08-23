@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_08_111542) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_09_134450) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -137,6 +137,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_08_111542) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
+    t.string "name_user"
+    t.string "avatar_user"
     t.index ["attachment_id"], name: "index_tickets_on_attachment_id"
     t.index ["category_id"], name: "index_tickets_on_category_id"
     t.index ["column_id"], name: "index_tickets_on_column_id"

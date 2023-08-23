@@ -17,6 +17,8 @@ class TicketsController < ApplicationController
 
   def create
     @ticket = Ticket.new(ticket_params)
+    @ticket.name_user = current_user.name
+    @ticket.avatar_user = current_user.avatar.attached? ? url_for(current_user.avatar) : nil
     if @ticket.save
       redirect_to tickets_path, notice: 'Ticket was successfully created.'
     else
@@ -45,6 +47,6 @@ class TicketsController < ApplicationController
 
   def ticket_params
     params.require(:ticket).permit(:title, :description, :category_id, :priority_id, :column_id, :company_id,
-                                   :departament_id, :user_id, :date_end, :automation_hours, :execution_hours, files: [])
+                                   :departament_id, :user_id, :date_end, :automation_hours, :execution_hours, :name_user, :avatar_user, files: [])
   end
 end
