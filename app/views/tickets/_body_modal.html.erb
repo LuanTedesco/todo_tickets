@@ -1,21 +1,20 @@
 <ul class="nav nav-tabs mb-3">
   <li class="nav-item">
-    <a class="nav-link active" data-bs-toggle="tab" href="#tab1">Informações do Ticket</a>
+    <a class="nav-link active" data-bs-toggle="tab" href="#tab1">Informations</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" data-bs-toggle="tab" href="#tab2">Anexos</a>
+    <a class="nav-link" data-bs-toggle="tab" href="#tab2">Attatments</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" data-bs-toggle="tab" href="#tab3">Etiquetas</a>
+    <a class="nav-link" data-bs-toggle="tab" href="#tab3">Tags</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" data-bs-toggle="tab" href="#tab4">Comentários</a>
+    <a class="nav-link" data-bs-toggle="tab" href="#tab4">Comments</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" data-bs-toggle="tab" href="#tab5">Checklist</a>
+    <a class="nav-link" data-bs-toggle="tab" href="#tab5">Subtasks</a>
   </li>
 </ul>
-
 <div class="tab-content">
   <div class="tab-pane active" id="tab1">
     <%= render "tickets/form", ticket: @ticket %>
