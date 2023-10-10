@@ -11,6 +11,8 @@ default_blob = ActiveStorage::Blob.create_and_upload!(
 
 User.create(name: 'Admin', email: 'admin@admin.com', departament_id: 1, avatar: default_blob, password: '123456',
             password_confirmation: '123456', admin: true)
+User.create(name: 'Luan', email: 'luan.tedesco@razonet.com.br', departament_id: 1, avatar: default_blob, password: 'Lu4036An',
+            password_confirmation: 'Lu4036An', admin: false)
 
 Column.create(title: 'Waiting', description: 'Waiting', level: 1, visible: true)
 Column.create(title: 'Developing', description: 'Developing', level: 2, visible: true)
@@ -18,7 +20,7 @@ Column.create(title: 'Testing', description: 'Testing', level: 3, visible: true)
 Column.create(title: 'Ready', description: 'Ready', level: 4, visible: true)
 Column.create(title: 'Dead file', description: 'Dead file', level: 5, visible: false)
 
-Priority.create(name: 'Baixa', description: 'Baixa', level: 1)
-Priority.create(name: 'Média', description: 'Media', level: 2)
-Priority.create(name: 'Alta', description: 'Alta', level: 3)
-Priority.create(name: 'Urgente', description: 'Urgente', level: 4)
+Priority.create(name: 'Low', description: 'Low', level: 1)
+Priority.create(name: 'Moderate', description: 'Moderate', level: 2)
+Priority.create(name: 'Important', description: 'Important', level: 3)
+Priority.create(name: 'Urgent', description: 'Urgent', level: 4)
