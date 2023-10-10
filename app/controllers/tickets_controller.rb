@@ -13,7 +13,10 @@ class TicketsController < ApplicationController
     @ticket = Ticket.new
   end
 
-  def edit; end
+  def edit
+    @ticket = Ticket.find(params[:id])
+    @company = @ticket.company_id
+  end
 
   def create
     @ticket = Ticket.new(ticket_params)
@@ -47,6 +50,6 @@ class TicketsController < ApplicationController
 
   def ticket_params
     params.require(:ticket).permit(:title, :description, :category_id, :priority_id, :column_id, :company_id,
-                                   :departament_id, :user_id, :date_end, :automation_hours, :execution_hours, :name_user, :avatar_user, files: [])
+                                   :departament_id, :user_id, :date_end, :automation_hours, :execution_hours, :name_user, :avatar_user)
   end
 end
