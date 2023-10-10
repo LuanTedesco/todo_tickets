@@ -11,7 +11,11 @@ Rails.application.routes.draw do
   resources :departaments
   resources :categories
   resources :priorities
-  resources :companies
+  resources :companies do
+    member do
+      get 'edit_modal'
+    end
+  end
 
   delete "files/:id/destroy", to: "files#destroy", as: "destroy_file"
 end
