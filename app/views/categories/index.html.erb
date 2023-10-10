@@ -14,7 +14,6 @@
             <tr>
               <th>Name</th>
               <th>Description</th>
-              <th>Departament</th>
               <th>Status</th>
               <th></th>
             </tr>
@@ -24,7 +23,6 @@
               <tr>
                 <td><%= category.name %></td>
                 <td><%= category.description %></td>
-                <td><%= category.departament.name %></td>
                 <td><%= category.status ? 'Active' : 'Inactive' %></td>
                 <td class="text-right">
                   <%= link_to 'Edit', edit_category_path(category), "data-controller":"turbo", class: "btn btn-primary btn-sm" %>

@@ -4,7 +4,7 @@ class CategoriesController < ApplicationController
   before_action :set_category, only: %i[show edit update destroy]
 
   def index
-    @categories = Category.all
+    @categories = Category.where(departament_id: current_user.departament_id)
   end
 
   def show; end
@@ -17,6 +17,7 @@ class CategoriesController < ApplicationController
 
   def create
     @category = Category.new(category_params)
+    @category.departament_id  = current_user.departament_id
     if @category.save
       redirect_to categories_path, notice: 'Category was successfully created.'
     else
@@ -44,6 +45,6 @@ class CategoriesController < ApplicationController
   end
 
   def category_params
-    params.require(:category).permit(:name, :description, :departament_id, :status)
+    params.require(:category).permit(:name, :description, :status)
   end
 end
