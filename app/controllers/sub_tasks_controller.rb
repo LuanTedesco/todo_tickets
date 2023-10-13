@@ -10,15 +10,18 @@ class SubTasksController < ApplicationController
   def show; end
 
   def new
+    @ticket = Ticket.find(params[:ticket_id])
     @sub_task = SubTask.new
   end
 
   def edit; end
 
   def create
-    @sub_task = SubTask.new(sub_task_params)
+    @ticket = Ticket.find(params[:sub_task][:ticket_id])
+    @sub_task = @ticket.sub_tasks.new(sub_task_params)
+
     if @sub_task.save
-      redirect_to sub_tasks_path, notice: 'Sub task was successfully created.'
+      redirect_to request.referrer || root_path
     else
       render :new, status: :unprocessable_entity
     end
@@ -44,6 +47,6 @@ class SubTasksController < ApplicationController
   end
 
   def sub_task_params
-    params.require(:sub_task).permit(:name, :date_end)
+    params.require(:sub_task).permit(:title, :date_end)
   end
 end

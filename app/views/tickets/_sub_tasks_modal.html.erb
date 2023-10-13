@@ -1,0 +1,33 @@
+<div>
+  <div class="d-flex justify-content-end p-2">
+    <%= link_to "New Subtask", new_sub_task_path(ticket_id: @ticket.id), "data-controller":"turbo", class: "btn btn-primary btn-md mx-1" %>
+  </div>
+  <div>
+    <%= turbo_frame_tag "sub_task_form" %>
+  </div>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Date End</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @ticket.sub_tasks.each do |sub_task| %>
+          <tr>
+            <td><%= sub_task.title %></td>
+            <td><%= sub_task.date_end %></td>
+            <td><%= sub_task.status ? 'Active' : 'Inactive' %></td>
+            <td class="text-right">
+              <%= link_to 'Edit', edit_sub_task_path(sub_task), class: "btn btn-primary btn-sm" %>
+              <%= link_to "Destroy", sub_task_path(sub_task), method: :delete, class: 'btn btn-danger btn-sm mr-3', data: { turbo_method: :delete, turbo_confirm: 'You sure?' } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
