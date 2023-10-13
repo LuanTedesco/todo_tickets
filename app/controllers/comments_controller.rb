@@ -10,15 +10,16 @@ class CommentsController < ApplicationController
   def show; end
 
   def new
+    @ticket = Ticket.find(params[:ticket_id])
     @comment = Comment.new
   end
 
-  def edit; end
-
   def create
-    @comment = Comment.new(comment_params)
+    @ticket = Ticket.find(params[:comment][:ticket_id])
+    @comment = @ticket.comments.new(comment_params)
+
     if @comment.save
-      redirect_to comments_path, notice: 'Comment was successfully created.'
+      redirect_to request.referrer || root_path
     else
       render :new, status: :unprocessable_entity
     end
@@ -34,7 +35,7 @@ class CommentsController < ApplicationController
 
   def destroy
     @comment.destroy
-    redirect_to comments_path, notice: 'Comment was successfully destroyed.'
+    redirect_to request.referrer || root_path
   end
 
   private

@@ -1,22 +1,20 @@
-<%= form_with(model: comment) do |form| %>
+<%= form_with(model: comment, local: true, class: 'my-4') do |form| %>
+  <div class="mb-3">
+    <%= form.label :title, class: 'form-label' %>
+    <%= form.text_area :title, class: 'form-control' %>
+  </div>
+  <%= form.hidden_field :ticket_id, value: @ticket.id %>
+  <div class="mb-3">
+    <%= form.submit "Submit", class: 'btn btn-primary' %>
+  </div>
   <% if comment.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
-
-      <ul>
+    <div class="alert alert-danger">
+      <h4 class="alert-heading">Errors prohibited this comment from being saved:</h4>
+      <ul class="mb-0">
         <% comment.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
-
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
 <% end %>

@@ -1,0 +1,30 @@
+<div>
+  <div class="d-flex justify-content-end p-2">
+    <%= link_to "New Comment", new_comment_path(ticket_id: @ticket.id), "data-controller":"turbo", class: "btn btn-primary btn-md mx-1" %>
+  </div>
+  <div>
+    <%= turbo_frame_tag "comment_form" %>
+  </div>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @ticket.comments.each do |comment| %>
+          <tr>
+            <td><%= comment.title %></td>
+            <td><%= comment.status ? 'Active' : 'Inactive' %></td>
+            <td class="text-right">
+              <%= link_to "Destroy", comment_path(comment), method: :delete, class: 'btn btn-danger btn-sm mr-3', data: { turbo_method: :delete, turbo_confirm: 'You sure?' } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
