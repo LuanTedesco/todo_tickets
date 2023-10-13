@@ -1,11 +1,14 @@
 class UsersController < ApplicationController
   layout 'application_tickets'
   before_action :authenticate_user!
-  before_action :authorize_admin, only: %i[index new create edit update destroy]
   before_action :set_user, only: %i[show edit update destroy]
 
   def index
-    @users = User.all
+    if current_user.admin?
+      @users = User.all
+    else
+      redirect_to root_path, alert: 'Você não tem permissão para visualizar a lista de usuários.'
+    end
   end
 
   def show; end
@@ -14,23 +17,25 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
-  def edit; end
+  def edit
+    unless current_user == @user
+      redirect_to root_path, alert: 'Você não tem permissão para realizar esta ação.'
+    end
+  end
 
   def create
     @user = User.new(user_params)
 
     if @user.save
-      redirect_to users_path, notice: 'User was successfully created.'
+      redirect_to users_path, notice: 'Usuário criado com sucesso.'
     else
       render :new, status: :unprocessable_entity
     end
   end
 
   def update
-    @user = User.find(params[:id])
-
     if @user.update(user_params)
-      redirect_to users_path, notice: 'User was successfully updated.'
+      redirect_to users_path, notice: 'Perfil atualizado com sucesso.'
     else
       render :edit, status: :unprocessable_entity
     end
@@ -38,7 +43,7 @@ class UsersController < ApplicationController
 
   def destroy
     @user.destroy
-    redirect_to users_path, notice: 'User deleted sucessfull'
+    redirect_to users_path, notice: 'Usuário excluído com sucesso.'
   end
 
   private
@@ -49,12 +54,5 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :email, :departament_id, :password, :password_confirmation, :admin, :avatar)
-  end
-
-  def authorize_admin
-    return if current_user&.admin?
-
-    flash[:alert] = 'Apenas administradores podem realizar esta ação.'
-    redirect_to root_path
   end
 end
