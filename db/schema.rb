@@ -82,10 +82,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_13_162049) do
 
   create_table "companies", force: :cascade do |t|
     t.string "name"
+    t.string "cnpj"
     t.boolean "status", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "cnpj", null: false
   end
 
   create_table "departaments", force: :cascade do |t|
