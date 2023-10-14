@@ -22,7 +22,7 @@
             <td><%= sub_task.date_end %></td>
             <td><%= sub_task.status ? 'Active' : 'Inactive' %></td>
             <td class="text-right">
-              <%= link_to 'Edit', edit_sub_task_path(sub_task), class: "btn btn-primary btn-sm" %>
+              <%= link_to 'Edit', edit_sub_task_path(sub_task), "data-controller":"turbo", class: "btn btn-primary btn-sm" %>
               <%= link_to "Destroy", sub_task_path(sub_task), method: :delete, class: 'btn btn-danger btn-sm mr-3', data: { turbo_method: :delete, turbo_confirm: 'You sure?' } %>
             </td>
           </tr>

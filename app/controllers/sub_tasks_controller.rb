@@ -14,7 +14,9 @@ class SubTasksController < ApplicationController
     @sub_task = SubTask.new
   end
 
-  def edit; end
+  def edit
+    @ticket = @sub_task.ticket
+  end
 
   def create
     @ticket = Ticket.find(params[:sub_task][:ticket_id])
@@ -29,7 +31,7 @@ class SubTasksController < ApplicationController
 
   def update
     if @sub_task.update(sub_task_params)
-      redirect_to sub_tasks_path, notice: 'Sub task was successfully updated.'
+      redirect_to request.referrer || root_path
     else
       render :edit, status: :unprocessable_entity
     end
