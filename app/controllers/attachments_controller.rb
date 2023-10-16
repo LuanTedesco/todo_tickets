@@ -21,7 +21,7 @@ class AttachmentsController < ApplicationController
     @attachment = Attachment.new(attachment_params)
 
     if @attachment.save
-      redirect_to attachments_path, notice: 'Attachment was successfully created.'
+      redirect_to request.referrer || root_path
     else
       render :new, status: :unprocessable_entity
     end
@@ -29,7 +29,7 @@ class AttachmentsController < ApplicationController
 
   def update
     if @attachment.update(attachment_params)
-      redirect_to attachments_path, notice: 'Attachment was successfully updated.'
+      redirect_to request.referrer || root_path
     else
       render :new, status: :unprocessable_entity
     end
@@ -37,7 +37,7 @@ class AttachmentsController < ApplicationController
 
   def destroy
     @attachment.destroy
-    redirect_to attachments_path, notice: 'Attachment was successfully destroyed.'
+    redirect_to request.referrer || root_path
   end
 
   private
