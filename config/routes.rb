@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users, skip: [:registrations]
+  devise_for :users, skip: [:registrations], controllers: { sessions: 'sessions' }
   root 'tickets#index'
   resources :users, only: %i[new create show index edit update destroy]
   resources :tickets
