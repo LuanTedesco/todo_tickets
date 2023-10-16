@@ -18,7 +18,7 @@ class UsersController < ApplicationController
   end
 
   def edit
-    unless current_user == @user
+    unless current_user == @user || current_user.admin?
       redirect_to root_path, alert: 'Você não tem permissão para realizar esta ação.'
     end
   end
