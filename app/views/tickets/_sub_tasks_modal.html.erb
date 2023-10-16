@@ -10,6 +10,7 @@
       <thead>
         <tr>
           <th>Title</th>
+          <th>Description</th>
           <th>Date End</th>
           <th>Status</th>
           <th></th>
@@ -19,6 +20,7 @@
         <% @ticket.sub_tasks.each do |sub_task| %>
           <tr>
             <td><%= sub_task.title %></td>
+            <td><%= sub_task.description %></td>
             <td><%= sub_task.date_end %></td>
             <td><%= sub_task.status ? 'Active' : 'Inactive' %></td>
             <td class="text-right">
