@@ -44,6 +44,6 @@ class DepartamentsController < ApplicationController
   end
 
   def departament_params
-    params.require(:departament).permit(:name, :description)
+    params.require(:departament).permit(:name, :description, :status)
   end
 end

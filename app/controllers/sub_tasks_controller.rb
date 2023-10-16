@@ -49,6 +49,6 @@ class SubTasksController < ApplicationController
   end
 
   def sub_task_params
-    params.require(:sub_task).permit(:title, :date_end)
+    params.require(:sub_task).permit(:title, :date_end, :status)
   end
 end
