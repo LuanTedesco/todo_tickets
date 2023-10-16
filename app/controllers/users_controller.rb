@@ -34,10 +34,21 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.update(user_params)
-      redirect_to users_path, notice: 'Perfil atualizado com sucesso.'
+    if current_user.admin?
+      if @user.update(user_params)
+        redirect_to @user, notice: 'User was successfully updated.'
+      else
+        render :edit
+      end
     else
-      render :edit, status: :unprocessable_entity
+      params[:user].delete(:status)
+      params[:user].delete(:admin)
+
+      if @user.update(user_params)
+        redirect_to @user, notice: 'User was successfully updated.'
+      else
+        render :edit
+      end
     end
   end
 
