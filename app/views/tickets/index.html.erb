@@ -30,6 +30,12 @@
                     <% end %>
                     <p class="mb-0 text-dark"><%= "#{ticket.name_user} #{ticket.created_at.strftime("em %d/%m/%Y às %H:%M")}" %></p>
                   </div>
+                  <div class="tags-list mt-2">
+                    <%= "Tags: " %>
+                    <% ticket.tags.each do |tag| %>
+                      <span class="badge badge-primary"><%= tag.name %></span>
+                    <% end %>
+                  </div>
                 </div>
               </a>
             <% end %>

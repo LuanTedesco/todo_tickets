@@ -11,11 +11,13 @@ class TicketsController < ApplicationController
 
   def new
     @ticket = Ticket.new
+    @tags = Tag.all
   end
 
   def edit
     @ticket = Ticket.find(params[:id])
     @company = @ticket.company_id
+    @tags = Tag.all
   end
 
   def create
@@ -50,6 +52,6 @@ class TicketsController < ApplicationController
 
   def ticket_params
     params.require(:ticket).permit(:title, :description, :category_id, :priority_id, :column_id, :company_id,
-                                   :departament_id, :user_id, :date_end, :automation_hours, :execution_hours, :name_user, :avatar_user)
+                                   :departament_id, :user_id, :date_end, :automation_hours, :execution_hours, :name_user, :avatar_user, tag_ids:[])
   end
 end

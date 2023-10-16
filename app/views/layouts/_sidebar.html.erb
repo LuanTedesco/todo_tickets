@@ -33,6 +33,13 @@
       <span>Departaments</span>
     <% end %>
   </li>
+  <hr class="sidebar-divider my-0">
+  <li class="nav-item active">
+    <%= link_to tags_path, class: "nav-link" do %>
+      <i class="fas fa-tag"></i>
+      <span>Tags</span>
+    <% end %>
+  </li>
   <% if current_user.admin? %>
     <hr class="sidebar-divider my-0">
     <li class="nav-item active">

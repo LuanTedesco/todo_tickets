@@ -5,4 +5,5 @@ class Ticket < ApplicationRecord
   belongs_to :departament
   has_many :comments
   has_many :sub_tasks
+  has_and_belongs_to_many :tags
 end
