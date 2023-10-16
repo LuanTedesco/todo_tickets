@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_16_134330) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_16_180056) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -45,10 +45,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_16_134330) do
   create_table "attachments", force: :cascade do |t|
     t.string "name"
     t.text "description"
-    t.string "url"
     t.boolean "status", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "ticket_id", null: false
+    t.index ["ticket_id"], name: "index_attachments_on_ticket_id"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -181,6 +182,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_16_134330) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "attachments", "tickets"
   add_foreign_key "categories", "departaments"
   add_foreign_key "comments", "tickets"
   add_foreign_key "sub_tasks", "tickets"

@@ -10,12 +10,14 @@ class AttachmentsController < ApplicationController
   def show; end
 
   def new
+    @ticket = Ticket.find(params[:ticket_id])
     @attachment = Attachment.new
   end
 
   def edit; end
 
   def create
+    @ticket = Ticket.find(params[:attachment][:ticket_id])
     @attachment = Attachment.new(attachment_params)
 
     if @attachment.save
@@ -45,6 +47,6 @@ class AttachmentsController < ApplicationController
   end
 
   def attachment_params
-    params.require(:attachment).permit(:title, :description, :status, :url)
+    params.require(:attachment).permit(:name, :description, :status, :file, :ticket_id)
   end
 end

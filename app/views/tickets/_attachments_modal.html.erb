@@ -1,8 +1,35 @@
 <div>
   <div class="d-flex justify-content-end p-2">
-    <%= link_to "New Attachment", new_attachment_path, "data-controller":"turbo", class: "btn btn-primary btn-md mx-1" %>
+    <%= link_to "New Attachment", new_attachment_path(ticket_id: @ticket.id), "data-controller":"turbo", class: "btn btn-primary btn-md mx-1" %>
   </div>
   <div>
     <%= turbo_frame_tag "attachment_form" %>
+  </div>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>File</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @ticket.attachments.each do |attachment| %>
+          <tr>
+            <td><%= attachment.name %></td>
+            <td><%= attachment.description %></td>
+            <td><%= attachment.file %></td>
+            <td><%= attachment.status ? 'Active' : 'Inactive' %></td>
+            <td class="text-right">
+              <%= link_to 'Edit', edit_attachment_path(attachment), "data-controller":"turbo", class: "btn btn-primary btn-sm" %>
+              <%= link_to "Destroy", attachment_path(attachment), method: :delete, class: 'btn btn-danger btn-sm mr-3', data: { turbo_method: :delete, turbo_confirm: 'You sure?' } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
 </div>
