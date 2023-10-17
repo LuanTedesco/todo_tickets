@@ -4,17 +4,25 @@ class SubTasksController < ApplicationController
   before_action :set_sub_task, only: %i[show edit update destroy]
 
   def index
-    @sub_tasks = SubTask.all
+    @user = current_user
+
+    if @user.admin?
+      @sub_tasks = SubTask.all
+    else
+      @sub_tasks = SubTask.where(status: true)
+    end
   end
 
   def show; end
 
   def new
+    @user = current_user
     @ticket = Ticket.find(params[:ticket_id])
     @sub_task = SubTask.new
   end
 
   def edit
+    @user = current_user
     @ticket = @sub_task.ticket
   end
 
@@ -30,6 +38,11 @@ class SubTasksController < ApplicationController
   end
 
   def update
+    @user = current_user
+    if !@user.admin?
+      params[:sub_task].delete(:status)
+    end
+
     if @sub_task.update(sub_task_params)
       redirect_to request.referrer || root_path
     else
@@ -38,7 +51,8 @@ class SubTasksController < ApplicationController
   end
 
   def destroy
-    @sub_task.destroy
+    @user = current_user
+    @sub_task.update(status: false)
     redirect_to sub_tasks_path, notice: 'Sub task was successfully destroyed.'
   end
 

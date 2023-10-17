@@ -4,16 +4,25 @@ class PrioritiesController < ApplicationController
   before_action :set_priority, only: %i[show edit update destroy]
 
   def index
-    @priorities = Priority.all
+    @user = current_user
+
+    if @user.admin?
+      @priorities = Priority.all
+    else
+      @priorities = Priority.where(status: true)
+    end
   end
 
   def show; end
 
   def new
+    @user = current_user
     @priority = Priority.new
   end
 
-  def edit; end
+  def edit
+    @user = current_user
+  end
 
   def create
     @priority = Priority.new(priority_params)
@@ -25,6 +34,11 @@ class PrioritiesController < ApplicationController
   end
 
   def update
+    @user = current_user
+    if !@user.admin?
+      params[:priority].delete(:status)
+    end
+
     if @priority.update(priority_params)
       redirect_to priorities_path, notice: 'Priority was successfully updated.'
     else
@@ -33,7 +47,8 @@ class PrioritiesController < ApplicationController
   end
 
   def destroy
-    @priority.destroy
+    @user = current_user
+    @priority.update(status: false)
     redirect_to priorities_path, notice: 'Priority was successfully destroyed.'
   end
 

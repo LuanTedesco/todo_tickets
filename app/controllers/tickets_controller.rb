@@ -4,6 +4,7 @@ class TicketsController < ApplicationController
   before_action :set_ticket, only: %i[show edit update destroy]
 
   def index
+    @user = current_user
     @tickets = Ticket.all
   end
 
@@ -17,6 +18,7 @@ class TicketsController < ApplicationController
   def edit
     @ticket = Ticket.find(params[:id])
     @company = @ticket.company_id
+    @user = current_user
     @tags = Tag.all
   end
 
@@ -40,7 +42,8 @@ class TicketsController < ApplicationController
   end
 
   def destroy
-    @ticket.destroy
+    @user = current_user
+    @ticket.update(status: false)
     redirect_to tickets_path, notice: 'Ticket was successfully destroyed.'
   end
 

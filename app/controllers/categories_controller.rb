@@ -4,16 +4,25 @@ class CategoriesController < ApplicationController
   before_action :set_category, only: %i[show edit update destroy]
 
   def index
-    @categories = Category.where(departament_id: current_user.departament_id)
+    @user = current_user
+
+    if @user.admin?
+      @categories = Category.where(departament_id: current_user.departament_id)
+    else
+      @categories = Category.where(departament_id: current_user.departament_id, status: true)
+    end
   end
 
   def show; end
 
   def new
+    @user = current_user
     @category = Category.new
   end
 
-  def edit; end
+  def edit
+    @user = current_user
+  end
 
   def create
     @category = Category.new(category_params)
@@ -26,6 +35,11 @@ class CategoriesController < ApplicationController
   end
 
   def update
+    @user = current_user
+    if !@user.admin?
+      params[:category].delete(:status)
+    end
+
     if @category.update(category_params)
       redirect_to categories_path, notice: 'Category was successfully updated.'
     else
@@ -34,7 +48,8 @@ class CategoriesController < ApplicationController
   end
 
   def destroy
-    @category.destroy
+    @user = current_user
+    @category.update(status: false)
     redirect_to categories_path, notice: 'Category was successfully destroyed.'
   end
 
