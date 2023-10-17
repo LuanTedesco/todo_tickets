@@ -21,7 +21,12 @@
           <tr>
             <td><%= comment.title %></td>
             <td><%= comment.status ? 'Active' : 'Inactive' %></td>
-            <td><%= comment.user.present? ? image_tag comment.user.avatar, alt: 'Avatar', class: 'img-profile rounded-circle avatar-small mr-2'"#{comment.user.name} #{comment.created_at.strftime("em %d/%m/%Y às %H:%M")}" : "" %></td>
+            <td>
+              <% if comment.user.present? %>
+                <%= image_tag comment.user.avatar, alt: 'Avatar', class: 'img-profile rounded-circle avatar-small mr-2' %>
+                <%= "#{comment.user.name} #{comment.created_at.strftime("em %d/%m/%Y às %H:%M")}" %>
+              <% end %>
+            </td>
             <td class="text-right">
               <%= link_to "Destroy", comment_path(comment), method: :delete, class: 'btn btn-danger btn-sm mr-3', data: { turbo_method: :delete, turbo_confirm: 'You sure?' } %>
             </td>
