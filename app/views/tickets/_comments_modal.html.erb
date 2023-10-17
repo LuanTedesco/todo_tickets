@@ -22,7 +22,7 @@
             <td><%= comment.title %></td>
             <td><%= comment.status ? 'Active' : 'Inactive' %></td>
             <td>
-              <% if comment.user.present? %>
+              <% if comment.user.present? && comment.user.avatar.present? %>
                 <%= image_tag comment.user.avatar, alt: 'Avatar', class: 'img-profile rounded-circle avatar-small mr-2' %>
                 <%= "#{comment.user.name} #{comment.created_at.strftime("em %d/%m/%Y às %H:%M")}" %>
               <% end %>
