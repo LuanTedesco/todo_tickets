@@ -4,16 +4,25 @@ class ColumnsController < ApplicationController
   before_action :set_column, only: %i[show edit update destroy]
 
   def index
-    @columns = Column.all
+    @user = current_user
+
+    if @user.admin?
+      @columns = Column.all
+    else
+      @columns = Column.where(status: true)
+    end
   end
 
   def show; end
 
   def new
+    @user = current_user
     @column = Column.new
   end
 
-  def edit; end
+  def edit
+    @user = current_user
+  end
 
   def create
     @column = Column.new(column_params)
@@ -27,6 +36,10 @@ class ColumnsController < ApplicationController
   end
 
   def update
+    @user = current_user
+    if !@user.admin?
+      params[:column].delete(:status)
+    end
     if @column.update(column_params)
       redirect_to columns_path, notice: 'Column was successfully updated.'
     else
@@ -35,7 +48,8 @@ class ColumnsController < ApplicationController
   end
 
   def destroy
-    @column.destroy
+    @user = current_user
+    @column.update(status: false)
     redirect_to columns_path, notice: 'Column was successfully destroyed.'
   end
 

@@ -3,18 +3,29 @@ class AttachmentsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_attachment, only: %i[show edit update destroy]
 
+
   def index
-    @attachments = Attachment.all
+    @user = current_user
+
+    if @user.admin?
+      @attachments = Attachment.all
+    else
+      @attachments = Attachment.where(status: true)
+    end
   end
 
   def show; end
 
   def new
+    @user = current_user
     @ticket = Ticket.find(params[:ticket_id])
     @attachment = Attachment.new
   end
 
-  def edit; end
+  def edit
+    @user = current_user
+    @ticket = @attachment.ticket
+  end
 
   def create
     @ticket = Ticket.find(params[:attachment][:ticket_id])
@@ -28,6 +39,11 @@ class AttachmentsController < ApplicationController
   end
 
   def update
+    @user = current_user
+    if !@user.admin?
+      params[:attachment].delete(:status)
+    end
+
     if @attachment.update(attachment_params)
       redirect_to request.referrer || root_path
     else
@@ -36,7 +52,8 @@ class AttachmentsController < ApplicationController
   end
 
   def destroy
-    @attachment.destroy
+    @user = current_user
+    @attachment.update(status: false)
     redirect_to request.referrer || root_path
   end
 

@@ -4,16 +4,25 @@ class TagsController < ApplicationController
   before_action :set_tag, only: %i[show edit update destroy]
 
   def index
-    @tags = Tag.all
+    @user = current_user
+
+    if @user.admin?
+      @tags = Tag.all
+    else
+      @tags = Tag.where(status: true)
+    end
   end
 
   def show; end
 
   def new
+    @user = current_user
     @tag = Tag.new
   end
 
-  def edit; end
+  def edit
+    @user = current_user
+  end
 
   def create
     @tag = Tag.new(tag_params)
@@ -25,6 +34,11 @@ class TagsController < ApplicationController
   end
 
   def update
+    @user = current_user
+    if !@user.admin?
+      params[:tag].delete(:status)
+    end
+
     if @tag.update(tag_params)
       redirect_to tags_path, notice: 'Tag was successfully updated.'
     else
@@ -33,7 +47,8 @@ class TagsController < ApplicationController
   end
 
   def destroy
-    @tag.destroy
+    @user = current_user
+    @tag.update(status: false)
     redirect_to tags_path, notice: 'Tag was successfully destroyed.'
   end
 
