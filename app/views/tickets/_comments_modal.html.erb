@@ -26,9 +26,11 @@
                 <%= "#{comment.user.name} #{comment.created_at.strftime("em %d/%m/%Y às %H:%M")}" %>
               <% end %>
             </td>
-            <td class="text-right">
-              <%= link_to "Destroy", comment_path(comment), method: :delete, class: 'btn btn-danger btn-sm mr-3', data: { turbo_method: :delete, turbo_confirm: 'You sure?' } %>
-            </td>
+            <% if @user.id == comment.user_id || @user.admin? %>
+              <td class="text-right">
+                <%= link_to "Destroy", comment_path(comment), method: :delete, class: 'btn btn-danger btn-sm mr-3', data: { turbo_method: :delete, turbo_confirm: 'You sure?' } %>
+              </td>
+            <% end %>
           </tr>
         <% end %>
       </tbody>

@@ -36,8 +36,11 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    @comment.destroy
-    redirect_to request.referrer || root_path
+    @user = current_user
+    if @user.id == @comment.user_id || @user.admin?
+      @comment.update(status: false)
+      redirect_to request.referrer || root_path
+    end
   end
 
   private
