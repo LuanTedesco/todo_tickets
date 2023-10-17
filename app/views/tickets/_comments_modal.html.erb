@@ -1,6 +1,7 @@
 <div>
   <div class="d-flex justify-content-end p-2">
     <%= link_to "New Comment", new_comment_path(ticket_id: @ticket.id), "data-controller":"turbo", class: "btn btn-primary btn-md mx-1" %>
+    <%= @user %>
   </div>
   <div>
     <%= turbo_frame_tag "comment_form" %>
@@ -11,6 +12,7 @@
         <tr>
           <th>Title</th>
           <th>Status</th>
+          <th class="ml-auto">Commented for</th>
           <th></th>
         </tr>
       </thead>
@@ -19,6 +21,7 @@
           <tr>
             <td><%= comment.title %></td>
             <td><%= comment.status ? 'Active' : 'Inactive' %></td>
+            <td><%= image_tag comment.user.avatar, alt: 'Avatar', class: 'img-profile rounded-circle avatar-small mr-2' %><%= "#{comment.user.name} #{comment.created_at.strftime("em %d/%m/%Y às %H:%M")}" %></td>
             <td class="text-right">
               <%= link_to "Destroy", comment_path(comment), method: :delete, class: 'btn btn-danger btn-sm mr-3', data: { turbo_method: :delete, turbo_confirm: 'You sure?' } %>
             </td>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_16_200429) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_16_225816) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -78,7 +78,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_16_200429) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "ticket_id", null: false
+    t.bigint "user_id"
     t.index ["ticket_id"], name: "index_comments_on_ticket_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "companies", force: :cascade do |t|
@@ -123,6 +125,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_16_200429) do
     t.boolean "status", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "ticket_id", null: false
+    t.index ["ticket_id"], name: "index_tags_on_ticket_id"
   end
 
   create_table "tags_tickets", id: false, force: :cascade do |t|
@@ -186,7 +190,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_16_200429) do
   add_foreign_key "attachments", "tickets"
   add_foreign_key "categories", "departaments"
   add_foreign_key "comments", "tickets"
+  add_foreign_key "comments", "users"
   add_foreign_key "sub_tasks", "tickets"
+  add_foreign_key "tags", "tickets"
   add_foreign_key "tickets", "attachments"
   add_foreign_key "tickets", "categories"
   add_foreign_key "tickets", "columns"

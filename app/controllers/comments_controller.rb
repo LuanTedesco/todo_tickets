@@ -11,11 +11,13 @@ class CommentsController < ApplicationController
 
   def new
     @ticket = Ticket.find(params[:ticket_id])
+    @user = current_user
     @comment = Comment.new
   end
 
   def create
     @ticket = Ticket.find(params[:comment][:ticket_id])
+    @user = current_user
     @comment = @ticket.comments.new(comment_params)
 
     if @comment.save
@@ -45,6 +47,6 @@ class CommentsController < ApplicationController
   end
 
   def comment_params
-    params.require(:comment).permit(:title, :status)
+    params.require(:comment).permit(:title, :status, :ticket_id, :user_id)
   end
 end
