@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../javascript/linkTicket.js"],
+  "sourcesContent": ["document\n  .getElementById('copy-ticket-link')\n  .addEventListener('click', function (event) {\n    event.preventDefault()\n\n    var ticketLink = this.getAttribute('href')\n    navigator.clipboard.writeText(ticketLink)\n    alert('Link copiado para a \u00E1rea de transfer\u00EAncia: ' + ticketLink)\n  })\n"],
+  "mappings": ";;AAAA,WACG,eAAe,kBAAkB,EACjC,iBAAiB,SAAS,SAAU,OAAO;AAC1C,UAAM,eAAe;AAErB,QAAI,aAAa,KAAK,aAAa,MAAM;AACzC,cAAU,UAAU,UAAU,UAAU;AACxC,UAAM,sDAAgD,UAAU;AAAA,EAClE,CAAC;",
+  "names": []
+}

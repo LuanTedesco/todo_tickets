@@ -100,9 +100,20 @@
         </div>
       </div>
       <div class="form-row d-flex justify-content-between py-3 px-1">
-        <button type="button" class="btn btn-danger btn-md" data-bs-dismiss="modal">Cancel</button>
+        <div>
+          <button type="button" class="btn btn-danger btn-md" data-bs-dismiss="modal">Cancel</button>
+          <%= link_to "Copy Link", "#", id: "copy-ticket-link", class: "btn btn-primary ml-2", href: edit_ticket_url(@ticket) %>
+        </div>
         <%= form.submit class: "btn btn-primary btn-md" %>
       </div>
     </div>
   </div>
 <% end %>
+<script>
+  document.getElementById('copy-ticket-link').addEventListener('click', function (event) {
+    event.preventDefault();
+    var ticketLink = this.getAttribute('href');
+    navigator.clipboard.writeText(ticketLink);
+    alert('Link do ticket copiado para a área de transferência');
+  });
+</script>

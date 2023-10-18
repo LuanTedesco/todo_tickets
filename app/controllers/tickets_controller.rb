@@ -27,7 +27,7 @@ class TicketsController < ApplicationController
     @ticket.name_user = current_user.name
     @ticket.avatar_user = current_user.avatar.attached? ? url_for(current_user.avatar) : nil
     if @ticket.save
-      redirect_to tickets_path, notice: 'Ticket was successfully created.'
+      redirect_to edit_ticket_path(@ticket), notice: 'Ticket was successfully created and is ready for editing.'
     else
       render :new, status: :unprocessable_entity
     end
