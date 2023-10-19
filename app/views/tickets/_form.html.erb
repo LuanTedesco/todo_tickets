@@ -94,7 +94,7 @@
           <%= form.label :selected_tags, class: "control-label" %>
           <div class="selected-tags">
             <% @ticket.tags.each do |tag| %>
-              <span class="badge badge-primary"><%= tag.name %></span>
+              <span class="badge badge-primary" style="background-color: <%= tag.color %>;"><%= tag.name %></span>
             <% end %>
           </div>
         </div>
