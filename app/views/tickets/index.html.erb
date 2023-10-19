@@ -33,7 +33,7 @@
                   <div class="tags-list mt-2">
                     <%= "Tags: " %>
                     <% ticket.tags.each do |tag| %>
-                      <span class="badge badge-primary"><%= tag.name %></span>
+                      <span class="badge badge-primary" style="background-color: <%= tag.color %>;"><%= tag.name %></span>
                     <% end %>
                   </div>
                 </div>
