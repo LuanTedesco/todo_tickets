@@ -6,7 +6,7 @@
   <body>
     <div class="container-fluid">
       <div class="d-flex justify-content-end align-items-center mb-3">
-        <%= link_to "New Tag", new_tag_path, class: "btn btn-primary btn-sm" %>
+        <%= link_to "New Tag", new_tag_path, "data-controller":"turbo", class: "btn btn-primary btn-sm" %>
       </div>
       <div class="table-responsive">
         <table class="table">
@@ -25,7 +25,7 @@
                 <td><%= tag.description %></td>
                 <td><%= tag.status ? 'Active' : 'Inactive' %></td>
                 <td class="text-right">
-                  <%= link_to 'Edit', edit_tag_path(tag), class: "btn btn-primary btn-sm" %>
+                  <%= link_to 'Edit', edit_tag_path(tag), "data-controller":"turbo", class: "btn btn-primary btn-sm" %>
                   <%= link_to "Destroy", tag_path(tag), method: :delete, class: 'btn btn-danger btn-sm mr-3', data: { turbo_method: :delete, turbo_confirm: 'You sure?' } %>
                 </td>
               </tr>
