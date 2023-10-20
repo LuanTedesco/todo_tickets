@@ -20,6 +20,7 @@ Column.create(title: 'Testing', description: 'Testing', level: 3, visible: true)
 Column.create(title: 'Ready', description: 'Ready', level: 4, visible: true)
 Column.create(title: 'Dead file', description: 'Dead file', level: 5, visible: false)
 
+
 Priority.create(name: 'Low', description: 'Low', level: 1)
 Priority.create(name: 'Moderate', description: 'Moderate', level: 2)
 Priority.create(name: 'Important', description: 'Important', level: 3)
