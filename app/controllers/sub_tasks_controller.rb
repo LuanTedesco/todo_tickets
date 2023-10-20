@@ -18,7 +18,7 @@ class SubTasksController < ApplicationController
   def new
     @user = current_user
     @ticket = Ticket.find(params[:ticket_id])
-    @sub_task = SubTask.new
+    @sub_task = SubTask.new(finished: false)
   end
 
   def edit
@@ -32,7 +32,7 @@ class SubTasksController < ApplicationController
 
     return unless @sub_task.save
 
-    redirect_to request.referrer || root_path
+    redirect_to edit_ticket_path(@ticket)
     flash[:success] = 'Sub task was successfully created.'
   end
 
@@ -42,14 +42,14 @@ class SubTasksController < ApplicationController
 
     return unless @sub_task.update(sub_task_params)
 
-    redirect_to request.referrer || root_path
-    flash[:success] = 'Sub task was successfully updated.'
+    redirect_to edit_ticket_path(@ticket)
+    flash[:success] = 'Sub Task was successfully updated.'
   end
 
   def destroy
     @user = current_user
     @sub_task.update(status: false)
-    redirect_to request.referrer || root_path
+    redirect_to edit_ticket_path(@ticket)
     flash[:success] = 'Sub task was successfully destroyed.'
   end
 

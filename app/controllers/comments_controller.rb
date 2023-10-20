@@ -22,8 +22,8 @@ class CommentsController < ApplicationController
 
     return unless @comment.save
 
-    redirect_to request.referrer || root_path
-    flash[:success] = 'Comment was successfully creted.'
+    redirect_to edit_ticket_path(@ticket)
+    flash[:success] = 'Comment was successfully created.'
   end
 
   def destroy
@@ -31,7 +31,7 @@ class CommentsController < ApplicationController
     return unless @user.id == @comment.user_id || @user.admin?
 
     @comment.update(status: false)
-    redirect_to request.referrer || root_path
+    redirect_to edit_ticket_path(@ticket)
     flash[:success] = 'Comment was successfully destroyed.'
   end
 
