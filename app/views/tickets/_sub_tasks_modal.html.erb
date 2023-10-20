@@ -9,10 +9,10 @@
     <table class="table">
       <thead>
         <tr>
-          <th></th>
           <th>Title</th>
           <th>Description</th>
           <th>Date End</th>
+          <th>Finished</th>
           <th>Status</th>
           <th></th>
         </tr>
@@ -20,16 +20,10 @@
       <tbody>
         <% @ticket.sub_tasks.each do |sub_task| %>
           <tr>
-            <td>
-              <div class="form-check">
-                <%= form_with model: sub_task, class:"form_sub_task " do |f| %>
-                  <%= f.check_box :finished, class: 'checkbox-toggle form-check-input ml-1' %>
-                <% end %>
-              </div>
-            </td>
             <td><%= sub_task.title %></td>
             <td><%= sub_task.description %></td>
             <td><%= sub_task.date_end %></td>
+            <td><%= sub_task.finished ? 'Yes' : 'No' %></td>
             <td><%= sub_task.status ? 'Active' : 'Inactive' %></td>
             <td class="text-right">
               <%= link_to 'Edit', edit_sub_task_path(sub_task), "data-controller":"turbo", class: "btn btn-primary btn-sm" %>
