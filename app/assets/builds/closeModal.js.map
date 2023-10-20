@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../javascript/closeModal.js"],
+  "sourcesContent": ["document.addEventListener('keydown', function (event) {\n  if (event.key === 'Escape') {\n    var modal = document.getElementById('staticBackdrop')\n    var modalController = modal.getAttribute('data-controller')\n    var modalControllerInstance =\n      ApplicationController.getControllerForElementAndIdentifier(\n        modal,\n        modalController\n      )\n\n    if (modalControllerInstance) {\n      modalControllerInstance.close()\n    }\n  }\n})\n"],
+  "mappings": ";;AAAA,WAAS,iBAAiB,WAAW,SAAU,OAAO;AACpD,QAAI,MAAM,QAAQ,UAAU;AAC1B,UAAI,QAAQ,SAAS,eAAe,gBAAgB;AACpD,UAAI,kBAAkB,MAAM,aAAa,iBAAiB;AAC1D,UAAI,0BACF,sBAAsB;AAAA,QACpB;AAAA,QACA;AAAA,MACF;AAEF,UAAI,yBAAyB;AAC3B,gCAAwB,MAAM;AAAA,MAChC;AAAA,IACF;AAAA,EACF,CAAC;",
+  "names": []
+}
