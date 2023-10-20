@@ -32,7 +32,7 @@ class AttachmentsController < ApplicationController
 
     return unless @attachment.save
 
-    redirect_to request.referrer || root_path
+    redirect_to edit_ticket_path(@ticket)
     flash[:success] = 'Attachment was successfully created.'
   end
 
@@ -42,14 +42,14 @@ class AttachmentsController < ApplicationController
 
     return unless @attachment.update(attachment_params)
 
-    redirect_to request.referrer || root_path
+    redirect_to edit_ticket_path(@ticket)
     flash[:success] = 'Attachment was successfully updated.'
   end
 
   def destroy
     @user = current_user
     @attachment.update(status: false)
-    redirect_to request.referrer || root_path
+    redirect_to edit_ticket_path(@ticket)
     flash[:success] = 'Attachment was successfully destroyed.'
   end
 
