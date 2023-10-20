@@ -1,3 +1,3 @@
 <%= turbo_stream.replace "bootstrap_modal" do %>
-  <%= render partial: "companies/modal", locals: { company: @company } %>
+  <%= render partial: "companies/modal", locals: { company: @company, verb: :post } %>
 <% end %>
