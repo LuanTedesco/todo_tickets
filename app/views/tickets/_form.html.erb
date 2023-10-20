@@ -13,66 +13,66 @@
       <% end %>
       <div class="form-row">
         <div class="form-group col-md-12 mb-3 px-1">
-          <%= form.label :title, style: "display: block", class: "small pb-1" %>
-          <%= form.text_field :title, class: "form-control" %>
+          <%= form.label :title, class: "small pb-1 d-block" %>
+          <%= form.text_field :title, class: "form-control", required: true %>
         </div>
       </div>
       <div class="form-row">
         <div class="form-group col-md-12 mb-3 px-1">
-          <%= form.label :description, style: "display: block", class: "small pb-1" %>
-          <%= form.text_area :description, class: "form-control" %>
+          <%= form.label :description, class: "small pb-1 d-block" %>
+          <%= form.text_area :description, class: "form-control", required: true %>
         </div>
       </div>
       <div class="form-row d-flex mb-3">
         <div class="form-group col-md-3 px-1">
-          <%= form.label :category_id, style: "display: block", class: "small pb-1" %>
-          <%= form.collection_select :category_id, Category.all, :id, :name, { prompt: "Selecione uma categoria" }, class: "form-select" %>
+          <%= form.label :category_id, class: "small pb-1 d-block" %>
+          <%= form.collection_select :category_id, Category.all, :id, :name, { prompt: "Selecione uma categoria" }, class: "form-select", required: true %>
         </div>
         <div class="form-group col-md-3 px-1">
-          <%= form.label :priority_id, style: "display: block", class: "small pb-1" %>
-          <%= form.collection_select :priority_id, Priority.all, :id, :name, { prompt: "Selecione uma prioridade" }, class: "form-select" %>
+          <%= form.label :priority_id, class: "small pb-1 d-block" %>
+          <%= form.collection_select :priority_id, Priority.all, :id, :name, { prompt: "Selecione uma prioridade" }, class: "form-select", required: true %>
         </div>
         <div class="form-group col-md-3 px-1">
-          <%= form.label :column_id, style: "display: block", class: "small pb-1" %>
-          <%= form.collection_select :column_id, Column.all, :id, :title, { prompt: "Selecione um status" }, class: "form-select" %>
+          <%= form.label :column_id, class: "small pb-1 d-block" %>
+          <%= form.collection_select :column_id, Column.all, :id, :title, { prompt: "Selecione um status" }, class: "form-select", required: true %>
         </div>
         <div class="form-group col-md-3 px-1">
-          <%= form.label :departament_id, style: "display: block", class: "small pb-1" %>
-          <%= form.collection_select :departament_id, Departament.all, :id, :name, { prompt: "Selecione um departamento" }, class: "form-select" %>
+          <%= form.label :departament_id, class: "small pb-1 d-block" %>
+          <%= form.collection_select :departament_id, Departament.all, :id, :name, { prompt: "Selecione um departamento" }, class: "form-select", required: true %>
         </div>
       </div>
       <div class="form-row d-flex mb-3 align-items-end">
         <div class="form-group col-md-6 px-1">
-          <%= form.label :company_id, style: "display: block", class: "small pb-1" %>
+          <%= form.label :company_id, class: "small pb-1 d-block" %>
           <%= form.collection_select :company_id, Company.all, :id, :name, { prompt: "Selecione uma empresa" }, class: "form-select" %>
         </div>
         <div class="form-group col-md-2 px-1">
-          <% if params[:action] == 'edit' %>
+          <% if params[:action] == 'edit' && @ticket.company_id.present? %>
             <%= link_to 'Edit', edit_company_path(@ticket.company_id), class: 'btn btn-primary' %>
           <% end %>
         </div>
         <div class="form-group  col-md-4 px-1">
-          <%= form.label :user_id, "User responsable" ,style: "display: block", class: "small pb-1" %>
+          <%= form.label :user_id, "User responsable", class: "small pb-1 d-block" %>
           <%= form.collection_select :user_id, User.all, :id, :name, { prompt: "Selecione um usuário" }, class: "form-select" %>
         </div>
       </div>
       <div class="form-row d-flex mb-3">
         <div class="form-group col-md-4 px-1">
-          <%= form.label :date_end, style: "display: block", class: "small pb-1" %>
+          <%= form.label :date_end, class: "small pb-1 d-block" %>
           <%= form.datetime_field :date_end, class: "form-control" %>
         </div>
         <div class="form-group col-md-4 px-1">
-          <%= form.label :automation_hours, style: "display: block", class: "small pb-1" %>
+          <%= form.label :automation_hours, class: "small pb-1 d-block" %>
           <%= form.number_field :automation_hours, class: "form-control" %>
         </div>
         <div class="form-group col-md-4 px-1">
-          <%= form.label :execution_hours, style: "display: block", class: "small pb-1" %>
+          <%= form.label :execution_hours, class: "small pb-1 d-block" %>
           <%= form.number_field :execution_hours, class: "form-control" %>
         </div>
       </div>
       <div class="form-row d-flex mb-3">
         <div class="form-group col-md-4 px-1">
-          <%= form.label :tags, class: "control-label" %>
+          <%= form.label :tags, class: "control-label d-block" %>
           <div class="dropdown">
             <button class="btn btn-primary dropdown-toggle" type="button" id="tagDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Selecione as tags

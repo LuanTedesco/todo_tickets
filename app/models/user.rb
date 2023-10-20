@@ -5,4 +5,5 @@ class User < ApplicationRecord
   belongs_to :departament
   has_many :tickets
   has_one_attached :avatar
+  validates :name, :email, :password, :password_confirmation, :departament_id, presence: true
 end
