@@ -20,6 +20,12 @@ class TicketsController < ApplicationController
     @ticket.avatar_user = @user.avatar.attached? ? url_for(@user.avatar) : nil
     return unless @ticket.save
 
+    Notification.create(
+      title: "New ticket destined for you",
+      description: "New ticket created with title: " + @ticket.title,
+      date_send: Date.today,
+      user_id: @ticket.user_id,
+      ticket_id: @ticket.id)
     redirect_to edit_ticket_path(@ticket)
     flash[:success] = 'Ticket was successfully created and is ready for editing.'
   end
