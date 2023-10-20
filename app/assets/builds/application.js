@@ -27645,6 +27645,23 @@
 
   // app/javascript/application.js
   var import_bootstrap_bundle_min = __toESM(require_bootstrap_bundle_min());
+
+  // app/javascript/closeModal.js
+  document.addEventListener("keydown", function(event) {
+    if (event.key === "Escape") {
+      var modal = document.getElementById("staticBackdrop");
+      var modalController = modal.getAttribute("data-controller");
+      var modalControllerInstance = ApplicationController.getControllerForElementAndIdentifier(
+        modal,
+        modalController
+      );
+      if (modalControllerInstance) {
+        modalControllerInstance.close();
+      }
+    }
+  });
+
+  // app/javascript/application.js
   var import_toastr = __toESM(require_toastr());
   window.bootstrap = bootstrap_esm_exports;
   window.toastr = import_toastr.default;
