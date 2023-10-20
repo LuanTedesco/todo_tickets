@@ -20,36 +20,36 @@
     <div class="col-md-8">
       <div class="row">
         <div class="col-md-6">
-          <%= f.label :name, class: "control-label" %>
-          <%= f.text_field :name, class: "form-control", required: true %>
+          <%= f.label :name, class: "control-label small" %>
+          <%= f.text_field :name, class: "form-control form-control-sm", required: true %>
         </div>
         <div class="col-md-6">
-          <%= f.label :email, class: "control-label" %>
-          <%= f.email_field :email, class: "form-control", required: true %>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <%= f.label :password, class: "control-label" %>
-          <%= f.password_field :password, class: "form-control", required: true %>
-        </div>
-        <div class="col-md-6">
-          <%= f.label :password_confirmation, class: "control-label" %>
-          <%= f.password_field :password_confirmation, class: "form-control", required: true %>
+          <%= f.label :email, class: "control-label small" %>
+          <%= f.email_field :email, class: "form-control form-control-sm", required: true %>
         </div>
       </div>
       <div class="row">
         <div class="col-md-6">
-          <%= f.label :change_avatar, class: "control-label" %>
-          <%= f.file_field :avatar, class: "form-control" %>
+          <%= f.label :password, class: "control-label small" %>
+          <%= f.password_field :password, class: "form-control form-control-sm", required: true %>
         </div>
         <div class="col-md-6">
-          <%= f.label :departament_id, class: "control-label" %>
-          <%= f.collection_select :departament_id, Departament.all, :id, :name, { prompt: "Select Departament"}, class: "form-select", required: true %>
+          <%= f.label :password_confirmation, class: "control-label small" %>
+          <%= f.password_field :password_confirmation, class: "form-control form-control-sm", required: true %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <%= f.label :change_avatar, class: "control-label small" %>
+          <%= f.file_field :avatar, class: "form-control form-control-sm" %>
+        </div>
+        <div class="col-md-6">
+          <%= f.label :departament_id, class: "control-label small" %>
+          <%= f.collection_select :departament_id, Departament.all, :id, :name, { prompt: "Select Departament"}, class: "form-select form-select-sm", required: true %>
         </div>
       </div>
       <div class="form-group d-flex justify-content-end mt-3">
-        <%= f.submit "Save", class: "btn btn-primary" %>
+        <%= f.submit "Save", class: "btn btn-primary btn-sm" %>
       </div>
     </div>
   </div>

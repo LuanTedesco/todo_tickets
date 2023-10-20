@@ -1,12 +1,12 @@
 <%= form_with(model: comment, local: true, class: 'my-4') do |form| %>
   <div class="mb-3">
     <%= form.label :title, class: 'form-label' %>
-    <%= form.text_area :title, class: 'form-control', required: true %>
+    <%= form.text_area :title, class: 'form-control form-control-sm', required: true %>
   </div>
   <%= form.hidden_field :ticket_id, value: @ticket.id %>
   <%= form.hidden_field :user_id, value: @user.id %>
   <div class="mb-3">
-    <%= form.submit "Submit", class: 'btn btn-primary' %>
+    <%= form.submit "Submit", class: 'btn btn-primary btn-sm' %>
   </div>
   <% if comment.errors.any? %>
     <div class="alert alert-danger">
