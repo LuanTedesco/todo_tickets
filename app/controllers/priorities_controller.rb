@@ -6,11 +6,11 @@ class PrioritiesController < ApplicationController
   def index
     @user = current_user
 
-    if @user.admin?
-      @priorities = Priority.all
-    else
-      @priorities = Priority.where(status: true)
-    end
+    @priorities = if @user.admin?
+                    Priority.all
+                  else
+                    Priority.where(status: true)
+                  end
   end
 
   def show; end
@@ -26,30 +26,27 @@ class PrioritiesController < ApplicationController
 
   def create
     @priority = Priority.new(priority_params)
-    if @priority.save
-      redirect_to priorities_path, notice: 'Priority was successfully created.'
-    else
-      render :new, status: :unprocessable_entity
-    end
+    return unless @priority.save
+
+    redirect_to priorities_path
+    flash[:success] = 'Priority was successfully created.'
   end
 
   def update
     @user = current_user
-    if !@user.admin?
-      params[:priority].delete(:status)
-    end
+    params[:priority].delete(:status) unless @user.admin?
 
-    if @priority.update(priority_params)
-      redirect_to priorities_path, notice: 'Priority was successfully updated.'
-    else
-      render :edit, status: :unprocessable_entity
-    end
+    return unless @priority.update(priority_params)
+
+    redirect_to priorities_path
+    flash[:success] = 'Priority was successfully updated.'
   end
 
   def destroy
     @user = current_user
     @priority.update(status: false)
-    redirect_to priorities_path, notice: 'Priority was successfully destroyed.'
+    redirect_to priorities_path
+    flash[:success] = 'Priority was successfully destroyed.'
   end
 
   private

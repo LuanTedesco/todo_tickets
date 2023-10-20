@@ -6,9 +6,9 @@ class SessionsController < Devise::SessionsController
   def check_status
     user = User.find_by(email: params[:user][:email])
 
-    if user && !user.status
-      flash[:alert] = "Sua conta está desativada. Entre em contato com o suporte."
-      redirect_to new_user_session_path
-    end
+    return unless user && !user.status
+
+    flash[:alert] = 'Sua conta está desativada. Entre em contato com o suporte.'
+    redirect_to new_user_session_path
   end
 end

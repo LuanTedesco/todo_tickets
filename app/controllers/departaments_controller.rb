@@ -6,11 +6,11 @@ class DepartamentsController < ApplicationController
   def index
     @user = current_user
 
-    if @user.admin?
-      @departaments = Departament.all
-    else
-      @departaments = Departament.where(status: true)
-    end
+    @departaments = if @user.admin?
+                      Departament.all
+                    else
+                      Departament.where(status: true)
+                    end
   end
 
   def show; end
@@ -26,29 +26,26 @@ class DepartamentsController < ApplicationController
 
   def create
     @departament = Departament.new(departament_params)
-    if @departament.save
-      redirect_to departaments_path, notice: 'Departament was successfully created.'
-    else
-      render :new, status: :unprocessable_entity
-    end
+    return unless @departament.save
+
+    redirect_to departaments_path
+    flash[:success] = 'Departament was successfully created.'
   end
 
   def update
     @user = current_user
-    if !@user.admin?
-      params[:departament].delete(:status)
-    end
-    if @departament.update(departament_params)
-      redirect_to departaments_path, notice: 'Departament was successfully updated.'
-    else
-      render :edit, status: :unprocessable_entity
-    end
+    params[:departament].delete(:status) unless @user.admin?
+    return unless @departament.update(departament_params)
+
+    redirect_to departaments_path
+    flash[:success] = 'Departament was successfully updated.'
   end
 
   def destroy
     @user = current_user
     @departament.update(status: false)
-    redirect_to departaments_path, notice: 'Departament was successfully destroyed.'
+    redirect_to departaments_path
+    flash[:success] = 'Departament was successfully destroyed.'
   end
 
   private

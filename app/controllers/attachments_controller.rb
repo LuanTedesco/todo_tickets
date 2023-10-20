@@ -3,15 +3,14 @@ class AttachmentsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_attachment, only: %i[show edit update destroy]
 
-
   def index
     @user = current_user
 
-    if @user.admin?
-      @attachments = Attachment.all
-    else
-      @attachments = Attachment.where(status: true)
-    end
+    @attachments = if @user.admin?
+                     Attachment.all
+                   else
+                     Attachment.where(status: true)
+                   end
   end
 
   def show; end
@@ -31,30 +30,27 @@ class AttachmentsController < ApplicationController
     @ticket = Ticket.find(params[:attachment][:ticket_id])
     @attachment = Attachment.new(attachment_params)
 
-    if @attachment.save
-      redirect_to request.referrer || root_path
-    else
-      render :new, status: :unprocessable_entity
-    end
+    return unless @attachment.save
+
+    redirect_to request.referrer || root_path
+    flash[:success] = 'Attachment was successfully created.'
   end
 
   def update
     @user = current_user
-    if !@user.admin?
-      params[:attachment].delete(:status)
-    end
+    params[:attachment].delete(:status) unless @user.admin?
 
-    if @attachment.update(attachment_params)
-      redirect_to request.referrer || root_path
-    else
-      render :new, status: :unprocessable_entity
-    end
+    return unless @attachment.update(attachment_params)
+
+    redirect_to request.referrer || root_path
+    flash[:success] = 'Attachment was successfully updated.'
   end
 
   def destroy
     @user = current_user
     @attachment.update(status: false)
     redirect_to request.referrer || root_path
+    flash[:success] = 'Attachment was successfully destroyed.'
   end
 
   private

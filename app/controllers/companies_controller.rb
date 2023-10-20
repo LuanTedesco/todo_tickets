@@ -6,11 +6,11 @@ class CompaniesController < ApplicationController
   def index
     @user = current_user
 
-    if @user.admin?
-      @companies = Company.all
-    else
-      @companies = Company.where(status: true)
-    end
+    @companies = if @user.admin?
+                   Company.all
+                 else
+                   Company.where(status: true)
+                 end
   end
 
   def show; end
@@ -26,30 +26,27 @@ class CompaniesController < ApplicationController
 
   def create
     @company = Company.new(company_params)
-    if @company.save
-      redirect_to companies_path, notice: 'Company was successfully created.'
-    else
-      render :new, status: :unprocessable_entity
-    end
+    return unless @company.save
+
+    redirect_to companies_path
+    flash[:success] = 'Company was successfully created.'
   end
 
   def update
     @user = current_user
-    if !@user.admin?
-      params[:company].delete(:status)
-    end
+    params[:company].delete(:status) unless @user.admin?
 
-    if @company.update(company_params)
-      redirect_to companies_path, notice: 'Company was successfully updated.'
-    else
-      render :edit, status: :unprocessable_entity
-    end
+    return unless @company.update(company_params)
+
+    redirect_to companies_path
+    flash[:success] = 'Company was successfully updated.'
   end
 
   def destroy
     @user = current_user
     @company.update(status: false)
-    redirect_to companies_path, notice: 'Company was successfully destroyed.'
+    redirect_to companies_path
+    flash[:success] = 'Company was successfully destroyed.'
   end
 
   private

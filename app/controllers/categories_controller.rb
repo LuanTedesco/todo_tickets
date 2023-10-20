@@ -6,11 +6,11 @@ class CategoriesController < ApplicationController
   def index
     @user = current_user
 
-    if @user.admin?
-      @categories = Category.where(departament_id: current_user.departament_id)
-    else
-      @categories = Category.where(departament_id: current_user.departament_id, status: true)
-    end
+    @categories = if @user.admin?
+                    Category.where(departament_id: current_user.departament_id)
+                  else
+                    Category.where(departament_id: current_user.departament_id, status: true)
+                  end
   end
 
   def show; end
@@ -26,31 +26,28 @@ class CategoriesController < ApplicationController
 
   def create
     @category = Category.new(category_params)
-    @category.departament_id  = current_user.departament_id
-    if @category.save
-      redirect_to categories_path, notice: 'Category was successfully created.'
-    else
-      render :new, status: :unprocessable_entity
-    end
+    @category.departament_id = current_user.departament_id
+    return unless @category.save
+
+    redirect_to categories_path
+    flash[:success] = 'Category was successfully created.'
   end
 
   def update
     @user = current_user
-    if !@user.admin?
-      params[:category].delete(:status)
-    end
+    params[:category].delete(:status) unless @user.admin?
 
-    if @category.update(category_params)
-      redirect_to categories_path, notice: 'Category was successfully updated.'
-    else
-      render :edit, status: :unprocessable_entity
-    end
+    return unless @category.update(category_params)
+
+    redirect_to categories_path
+    flash[:success] = 'Category was successfully updated.'
   end
 
   def destroy
     @user = current_user
     @category.update(status: false)
-    redirect_to categories_path, notice: 'Category was successfully destroyed.'
+    redirect_to categories_path
+    flash[:success] = 'Category was successfully destroyed.'
   end
 
   private
