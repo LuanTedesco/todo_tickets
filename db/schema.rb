@@ -125,9 +125,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_19_120107) do
     t.boolean "status", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "ticket_id", null: false
     t.string "color"
-    t.index ["ticket_id"], name: "index_tags_on_ticket_id"
   end
 
   create_table "tags_tickets", id: false, force: :cascade do |t|
@@ -193,7 +191,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_19_120107) do
   add_foreign_key "comments", "tickets"
   add_foreign_key "comments", "users"
   add_foreign_key "sub_tasks", "tickets"
-  add_foreign_key "tags", "tickets"
   add_foreign_key "tickets", "attachments"
   add_foreign_key "tickets", "categories"
   add_foreign_key "tickets", "columns"

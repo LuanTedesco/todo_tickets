@@ -1,0 +1,13 @@
+<% if flash[:success] %>
+  <script>
+    toastr.success("<%= flash[:success] %>");
+  </script>
+<% elsif flash[:info] %>
+  <script>
+    toastr.info("<%= flash[:info] %>");
+  </script>
+<% elsif flash[:error] %>
+  <script>
+    toastr.error("<%= flash[:error] %>");
+  </script>
+<% end %>

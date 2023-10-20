@@ -25,6 +25,8 @@ gem 'redis', '~> 4.0'
 
 gem 'devise'
 
+gem 'toastr-rails'
+
 gem 'activestorage'
 
 gem 'active_storage_validations'

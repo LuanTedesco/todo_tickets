@@ -6,11 +6,11 @@ class TagsController < ApplicationController
   def index
     @user = current_user
 
-    if @user.admin?
-      @tags = Tag.all
-    else
-      @tags = Tag.where(status: true)
-    end
+    @tags = if @user.admin?
+              Tag.all
+            else
+              Tag.where(status: true)
+            end
   end
 
   def show; end
@@ -26,30 +26,27 @@ class TagsController < ApplicationController
 
   def create
     @tag = Tag.new(tag_params)
-    if @tag.save
-      redirect_to tags_path, notice: 'Tag was successfully created.'
-    else
-      render :new, status: :unprocessable_entity
-    end
+    return unless @tag.save
+
+    redirect_to tags_path
+    flash[:success] = 'Tag was successfully created.'
   end
 
   def update
     @user = current_user
-    if !@user.admin?
-      params[:tag].delete(:status)
-    end
+    params[:tag].delete(:status) unless @user.admin?
 
-    if @tag.update(tag_params)
-      redirect_to tags_path, notice: 'Tag was successfully updated.'
-    else
-      render :edit, status: :unprocessable_entity
-    end
+    return unless @tag.update(tag_params)
+
+    redirect_to tags_path
+    flash[:success] = 'Tag was successfully updated.'
   end
 
   def destroy
     @user = current_user
     @tag.update(status: false)
-    redirect_to tags_path, notice: 'Tag was successfully destroyed.'
+    redirect_to tags_path
+    flash[:success] = 'Tag was successfully destroyed.'
   end
 
   private

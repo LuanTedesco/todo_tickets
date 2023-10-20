@@ -6,11 +6,11 @@ class SubTasksController < ApplicationController
   def index
     @user = current_user
 
-    if @user.admin?
-      @sub_tasks = SubTask.all
-    else
-      @sub_tasks = SubTask.where(status: true)
-    end
+    @sub_tasks = if @user.admin?
+                   SubTask.all
+                 else
+                   SubTask.where(status: true)
+                 end
   end
 
   def show; end
@@ -30,30 +30,27 @@ class SubTasksController < ApplicationController
     @ticket = Ticket.find(params[:sub_task][:ticket_id])
     @sub_task = @ticket.sub_tasks.new(sub_task_params)
 
-    if @sub_task.save
-      redirect_to request.referrer || root_path
-    else
-      render :new, status: :unprocessable_entity
-    end
+    return unless @sub_task.save
+
+    redirect_to request.referrer || root_path
+    flash[:success] = 'Sub task was successfully created.'
   end
 
   def update
     @user = current_user
-    if !@user.admin?
-      params[:sub_task].delete(:status)
-    end
+    params[:sub_task].delete(:status) unless @user.admin?
 
-    if @sub_task.update(sub_task_params)
-      redirect_to request.referrer || root_path
-    else
-      render :edit, status: :unprocessable_entity
-    end
+    return unless @sub_task.update(sub_task_params)
+
+    redirect_to request.referrer || root_path
+    flash[:success] = 'Sub task was successfully updated.'
   end
 
   def destroy
     @user = current_user
     @sub_task.update(status: false)
-    redirect_to sub_tasks_path, notice: 'Sub task was successfully destroyed.'
+    redirect_to request.referrer || root_path
+    flash[:success] = 'Sub task was successfully destroyed.'
   end
 
   private

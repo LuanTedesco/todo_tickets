@@ -6,11 +6,11 @@ class ColumnsController < ApplicationController
   def index
     @user = current_user
 
-    if @user.admin?
-      @columns = Column.all
-    else
-      @columns = Column.where(status: true)
-    end
+    @columns = if @user.admin?
+                 Column.all
+               else
+                 Column.where(status: true)
+               end
   end
 
   def show; end
@@ -27,30 +27,26 @@ class ColumnsController < ApplicationController
   def create
     @column = Column.new(column_params)
 
-    if @column.save
-      redirect_to columns_path, notice: 'Column was successfully created.'
+    return unless @column.save
 
-    else
-      render :new, status: :unprocessable_entity
-    end
+    redirect_to columns_path
+    flash[:success] = 'Column was successfully created.'
   end
 
   def update
     @user = current_user
-    if !@user.admin?
-      params[:column].delete(:status)
-    end
-    if @column.update(column_params)
-      redirect_to columns_path, notice: 'Column was successfully updated.'
-    else
-      render :edit, status: :unprocessable_entity
-    end
+    params[:column].delete(:status) unless @user.admin?
+    return unless @column.update(column_params)
+
+    redirect_to columns_path
+    flash[:success] = 'Column was successfully updated.'
   end
 
   def destroy
     @user = current_user
     @column.update(status: false)
-    redirect_to columns_path, notice: 'Column was successfully destroyed.'
+    redirect_to columns_path
+    flash[:success] = 'Column was successfully destroyed.'
   end
 
   private

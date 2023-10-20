@@ -20,27 +20,19 @@ class CommentsController < ApplicationController
     @user = current_user
     @comment = @ticket.comments.new(comment_params)
 
-    if @comment.save
-      redirect_to request.referrer || root_path
-    else
-      render :new, status: :unprocessable_entity
-    end
-  end
+    return unless @comment.save
 
-  def update
-    if @comment.update(comment_params)
-      redirect_to comments_path, notice: 'Comment was successfully updated.'
-    else
-      render :edit, status: :unprocessable_entity
-    end
+    redirect_to request.referrer || root_path
+    flash[:success] = 'Comment was successfully creted.'
   end
 
   def destroy
     @user = current_user
-    if @user.id == @comment.user_id || @user.admin?
-      @comment.update(status: false)
-      redirect_to request.referrer || root_path
-    end
+    return unless @user.id == @comment.user_id || @user.admin?
+
+    @comment.update(status: false)
+    redirect_to request.referrer || root_path
+    flash[:success] = 'Comment was successfully destroyed.'
   end
 
   private

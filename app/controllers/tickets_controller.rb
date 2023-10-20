@@ -5,7 +5,6 @@ class TicketsController < ApplicationController
 
   def index
     @tickets = Ticket.all
-    puts "\n\n#{params}\n\n"
     order_filters
   end
 
@@ -19,33 +18,35 @@ class TicketsController < ApplicationController
     @ticket = Ticket.new(ticket_params)
     @ticket.name_user = @user.name
     @ticket.avatar_user = @user.avatar.attached? ? url_for(@user.avatar) : nil
-    if @ticket.save
-      redirect_to edit_ticket_path(@ticket), notice: 'Ticket was successfully created and is ready for editing.'
-    else
-      render :new, status: :unprocessable_entity
-    end
+    return unless @ticket.save
+
+    redirect_to edit_ticket_path(@ticket)
+    flash[:success] = 'Ticket was successfully created and is ready for editing.'
   end
 
   def update
-    if @ticket.update(ticket_params)
-      redirect_to tickets_path, notice: 'Ticket was successfully updated.'
-    else
-      render :edit, status: :unprocessable_entity
-    end
+    return unless @ticket.update(ticket_params)
+
+    redirect_to tickets_path
+    flash[:success] = 'Ticket was successfully updated.'
   end
 
   def destroy
     @ticket.update(status: false)
-    redirect_to tickets_path, notice: 'Ticket was successfully destroyed.'
+    redirect_to tickets_path
+    flash[:success] = 'Ticket was successfully destroyed.'
   end
 
   private
+
   def set_tags
     @tags = Tag.all
   end
 
   def set_created_filter
-    @created_filter = params[:date_filter_type].eql?('Created date') ? "DATE(created_at) between ? and ?" : "DATE(date_end) between ? and ?" unless params[:date_filter_type].blank?
+    return if params[:date_filter_type].blank?
+
+    @created_filter = params[:date_filter_type].eql?('Created date') ? 'DATE(created_at) between ? and ?' : 'DATE(date_end) between ? and ?'
   end
 
   def order_filters
@@ -56,31 +57,22 @@ class TicketsController < ApplicationController
     @tickets = @tickets.where(company_id: params[:filter_company]) if params[:filter_company].present?
     @tickets = @tickets.where(user_id: params[:filter_user]) if params[:filter_user].present?
     @tickets = @tickets.where(tag: params[:filter_tag]) if params[:filter_tag].present?
-    @tickets = @tickets.where(@created_filter, Date.parse(params[:filter_date_start]), Date.parse(params[:filter_date_end])) if params[:filter_date_start].present? && params[:filter_date_end].present?
+    return unless params[:filter_date_start].present? && params[:filter_date_end].present?
+
+    @tickets = @tickets.where(@created_filter, Date.parse(params[:filter_date_start]),
+                              Date.parse(params[:filter_date_end]))
   end
 
   def set_ticket
-    @ticket = Ticket.find(params[:id]) rescue Ticket.new
+    @ticket = begin
+      Ticket.find(params[:id])
+    rescue StandardError
+      Ticket.new
+    end
   end
 
   def ticket_params
-    params
-      .require(:ticket)
-      .permit(
-        :title,
-        :description,
-        :category_id,
-        :priority_id,
-        :column_id,
-        :company_id,
-        :departament_id,
-        :user_id,
-        :date_end,
-        :automation_hours,
-        :execution_hours,
-        :name_user,
-        :avatar_user,
-        tag_ids:[]
-      )
+    params.require(:ticket).permit(:title, :description, :category_id, :priority_id, :column_id, :company_id,
+                                   :departament_id, :user_id, :date_end, :automation_hours, :execution_hours, :name_user, :avatar_user, tag_ids: [])
   end
 end
