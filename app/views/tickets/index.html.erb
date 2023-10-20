@@ -28,10 +28,10 @@
       <%= select_tag :date_filter_type, options_for_select(['Created date', 'End date'], params[:date_filter_type]), class: 'form-control form-control-sm' %>
     </div>
     <div class="form-group col-md-1">
-      <%= date_field_tag :filter_date_start, params[:filter_date_start] || Date.current, class: 'form-control form-control-sm' %>
+      <%= date_field_tag :filter_date_start, params[:filter_date_start], class: 'form-control form-control-sm' %>
     </div>
     <div class="form-group col-md-1">
-      <%= date_field_tag :filter_date_end, params[:filter_date_end] || Date.current, class: 'form-control form-control-sm' %>
+      <%= date_field_tag :filter_date_end, params[:filter_date_end], class: 'form-control form-control-sm' %>
     </div>
     <div class="form-group col-md-1">
       <%= submit_tag 'Filter', class: 'btn btn-primary w-100 btn-sm' %>
