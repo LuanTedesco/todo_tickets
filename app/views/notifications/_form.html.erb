@@ -1,0 +1,37 @@
+<%= form_with(model: notification, class: 'form') do |f| %>
+  <% if notification.errors.any? %>
+    <div class="alert alert-danger">
+      <h2><%= pluralize(notification.errors.count, "error") %> prohibited this category from being saved:</h2>
+      <ul>
+        <% notification.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="form-group">
+    <%= f.label :title, class: "control-label small" %>
+    <%= f.text_field :title, class: "form-control form-control-sm", readonly: true %>
+  </div>
+  <div class="form-group">
+    <%= f.label :description, class: "control-label small" %>
+    <%= f.text_area :description, class: "form-control form-control-sm", readonly: true %>
+  </div>
+  <div class="form-group row">
+    <div class="col-md-6">
+      <%= f.label :date_send, class: "control-label small" %>
+      <%= f.date_field :date_send, class: "form-control form-control-sm", readonly: true %>
+    </div>
+    <% if @user.admin? %>
+      <div class="col-md-6">
+        <%= f.label :status, class: "control-label small" %>
+        <%= f.select :status, [['Active', true], ['Inactive', false]], {}, class: "form-control form-control-sm" %>
+      </div>
+    <% end %>
+  </div>
+  <% if @user.admin? %>
+    <div class="form-group d-flex justify-content-end">
+      <%= f.submit "Save", class: "btn btn-primary btn-sm" %>
+    </div>
+  <% end %>
+<% end %>

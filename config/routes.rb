@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resources :departaments
   resources :categories
   resources :priorities
+  resources :notifications
   resources :companies do
     member do
       get 'edit_modal'
