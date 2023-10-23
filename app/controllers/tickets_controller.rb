@@ -45,7 +45,7 @@ class TicketsController < ApplicationController
     department_users = User.where(departament_id: ticket.departament_id)
     department_users.each do |user|
       Notification.create(
-        title: "New ticket destined for you",
+        title: ticket.title,
         description: "New ticket created with title: #{ticket.title}, for user: #{user.name}",
         user_id: user.id,
         ticket_id: ticket.id,

@@ -34,6 +34,7 @@
               <% if @user.admin? %>
                 <th>Status</th>
               <% end %>
+              <th>Read</th>
               <th></th>
             </tr>
           </thead>
@@ -46,10 +47,17 @@
                 <% if @user.admin? %>
                   <td><%= notification.status ? 'Active' : 'Inactive' %></td>
                 <% end %>
-                <td class="text-right">
-                  <%= link_to 'Show', edit_notification_path(notification), class: "btn btn-primary btn-sm" %>
+                <td><%= notification.read ? 'Yes' : 'No' %></td>
+                <td class="text-right d-flex align-items-end">
+                  <%= form_with(url: mark_as_read_notification_path(notification), method: :patch, local: true) do |form| %>
+                    <%= form.submit 'Read', class: "btn btn-success btn-sm mr-2" %>
+                  <% end %>
+                  <%= form_with(url: mark_as_unread_notification_path(notification), method: :patch, local: true) do |form| %>
+                    <%= form.submit 'Unread', class: "btn btn-danger btn-sm mr-2" %>
+                  <% end %>
+                  <%= link_to 'Show', edit_notification_path(notification), class: "btn btn-primary btn-sm mr-2" %>
                   <% if @user.admin? %>
-                    <%= link_to "Destroy", notification_path(notification), method: :delete, class: 'btn btn-danger btn-sm mr-3', data: { turbo_method: :delete, turbo_confirm: 'You sure?' } %>
+                    <%= link_to "Destroy", notification_path(notification), method: :delete, class: 'btn btn-danger btn-sm', data: { turbo_method: :delete, turbo_confirm: 'You sure?' } %>
                   <% end %>
                 </td>
               </tr>

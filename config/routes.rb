@@ -11,7 +11,12 @@ Rails.application.routes.draw do
   resources :departaments
   resources :categories
   resources :priorities
-  resources :notifications
+  resources :notifications do
+    member do
+      patch :mark_as_read
+      patch :mark_as_unread
+    end
+  end
   resources :companies do
     member do
       get 'edit_modal'

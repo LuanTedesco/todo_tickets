@@ -6,7 +6,7 @@ class NotificationsController < ApplicationController
   def index
     user_department_id = current_user.departament_id
     @notifications = current_user.notifications.where(status: true).joins(:ticket).where(tickets: { departament_id: user_department_id })
-    @notifications = @notifications.order(:created_at)
+    @notifications = @notifications.order(created_at: :desc)
     order_filters
   end
 
@@ -46,6 +46,22 @@ class NotificationsController < ApplicationController
     end
   end
 
+  def mark_as_read
+    @notification = Notification.find(params[:id])
+    @notification.update(read: true)
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def mark_as_unread
+    @notification = Notification.find(params[:id])
+    @notification.update(read: false)
+    respond_to do |format|
+      format.js
+    end
+  end
+
   private
 
   def order_filters
@@ -53,7 +69,7 @@ class NotificationsController < ApplicationController
     @notifications = @notifications.where('LOWER(notifications.description) LIKE ?', "%#{params[:filter_description]}%") if params[:filter_description].present?
     if params[:filter_date_start].present? && params[:filter_date_end].present?
       start_date = Date.parse(params[:filter_date_start])
-      end_date = Date.parse(params[:filter_date_end]).end_of_day  # Inclui a data final completa
+      end_date = Date.parse(params[:filter_date_end]).end_of_day
       @notifications = @notifications.where('DATE(notifications.created_at) BETWEEN ? AND ?', start_date, end_date)
     end
   end

@@ -1,0 +1,5 @@
+<% if @notification.read %>
+  flash[:sucess] = 'Notificação marcada como lida!';
+<% else %>
+  flash[:alert] = 'Erro ao marcar a notificação como lida!';
+<% end %>
