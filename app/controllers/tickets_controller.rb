@@ -65,7 +65,7 @@ class TicketsController < ApplicationController
   end
 
   def order_filters
-    @tickets = @tickets.where('LOWER(title) LIKE ?', "%#{params[:filter_title]}%") if params[:filter_title].present?
+    @tickets = @tickets.where('LOWER(tickets.title) LIKE ?', "%#{params[:filter_title]}%") if params[:filter_title].present?
     @tickets = @tickets.where(category: params[:filter_category]) if params[:filter_category].present?
     @tickets = @tickets.where(priority: params[:filter_priority]) if params[:filter_priority].present?
     @tickets = @tickets.where(departament: params[:filter_departament]) if params[:filter_departament].present?
