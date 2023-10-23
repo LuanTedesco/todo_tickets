@@ -1,9 +1,28 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Priorities</title>
+    <title>Notifications</title>
   </head>
   <body>
+    <div class="mx-0 px-0">
+      <%= form_tag notifications_path, class: 'mb-3 row', method: :get do %>
+        <div class="form-group col-md-3">
+          <%= text_field_tag :filter_title, params[:filter_title], class: 'form-control form-control-sm', placeholder: 'Title' %>
+        </div>
+        <div class="form-group col-md-3">
+          <%= text_field_tag :filter_description, params[:filter_description], class: 'form-control form-control-sm', placeholder: 'Description' %>
+        </div>
+        <div class="form-group col-md-1">
+          <%= date_field_tag :filter_date_start, params[:filter_date_start], class: 'form-control form-control-sm' %>
+        </div>
+        <div class="form-group col-md-1">
+          <%= date_field_tag :filter_date_end, params[:filter_date_end], class: 'form-control form-control-sm' %>
+        </div>
+        <div class="form-group col-md-1">
+          <%= submit_tag 'Filter', class: 'btn btn-primary w-100 btn-sm' %>
+        </div>
+      <% end %>
+    </div>
     <div class="container-fluid">
       <div class="table-responsive">
         <table class="table">
@@ -15,6 +34,7 @@
               <% if @user.admin? %>
                 <th>Status</th>
               <% end %>
+              <th>Read</th>
               <th></th>
             </tr>
           </thead>
@@ -27,10 +47,17 @@
                 <% if @user.admin? %>
                   <td><%= notification.status ? 'Active' : 'Inactive' %></td>
                 <% end %>
-                <td class="text-right">
-                  <%= link_to 'Show', edit_notification_path(notification), class: "btn btn-primary btn-sm" %>
+                <td><%= notification.read ? 'Yes' : 'No' %></td>
+                <td class="text-right d-flex align-items-end">
+                  <%= form_with(url: mark_as_read_notification_path(notification), method: :patch, local: true) do |form| %>
+                    <%= form.submit 'Read', class: "btn btn-success btn-sm mr-2" %>
+                  <% end %>
+                  <%= form_with(url: mark_as_unread_notification_path(notification), method: :patch, local: true) do |form| %>
+                    <%= form.submit 'Unread', class: "btn btn-danger btn-sm mr-2" %>
+                  <% end %>
+                  <%= link_to 'Show', edit_notification_path(notification), class: "btn btn-primary btn-sm mr-2" %>
                   <% if @user.admin? %>
-                    <%= link_to "Destroy", notification_path(notification), method: :delete, class: 'btn btn-danger btn-sm mr-3', data: { turbo_method: :delete, turbo_confirm: 'You sure?' } %>
+                    <%= link_to "Destroy", notification_path(notification), method: :delete, class: 'btn btn-danger btn-sm', data: { turbo_method: :delete, turbo_confirm: 'You sure?' } %>
                   <% end %>
                 </td>
               </tr>

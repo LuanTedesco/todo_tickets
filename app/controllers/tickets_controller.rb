@@ -42,22 +42,12 @@ class TicketsController < ApplicationController
   private
 
   def create_notification(ticket)
-    if ticket.user_id.nil?
-      department_users = User.where(departament_id: ticket.departament_id)
-      department_users.each do |user|
-        Notification.create(
-          title: "New ticket destined for you",
-          description: "New ticket created with title: #{ticket.title}",
-          user_id: user.id,
-          ticket_id: ticket.id,
-          departament_id: ticket.departament_id
-        )
-      end
-    else
+    department_users = User.where(departament_id: ticket.departament_id)
+    department_users.each do |user|
       Notification.create(
-        title: "New ticket destined for you",
-        description: "New ticket created with title: #{ticket.title}",
-        user_id: ticket.user_id,
+        title: ticket.title,
+        description: "New ticket created with title: #{ticket.title}, for user: #{user.name}",
+        user_id: user.id,
         ticket_id: ticket.id,
         departament_id: ticket.departament_id
       )
@@ -75,7 +65,7 @@ class TicketsController < ApplicationController
   end
 
   def order_filters
-    @tickets = @tickets.where('LOWER(title) LIKE ?', "%#{params[:filter_title]}%") if params[:filter_title].present?
+    @tickets = @tickets.where('LOWER(tickets.title) LIKE ?', "%#{params[:filter_title]}%") if params[:filter_title].present?
     @tickets = @tickets.where(category: params[:filter_category]) if params[:filter_category].present?
     @tickets = @tickets.where(priority: params[:filter_priority]) if params[:filter_priority].present?
     @tickets = @tickets.where(departament: params[:filter_departament]) if params[:filter_departament].present?

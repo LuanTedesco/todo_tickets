@@ -5,8 +5,9 @@ class NotificationsController < ApplicationController
 
   def index
     user_department_id = current_user.departament_id
-    @notifications = current_user.notifications.where(status: true).joins(:ticket)
-                             .where(tickets: { departament_id: user_department_id })
+    @notifications = current_user.notifications.where(status: true).joins(:ticket).where(tickets: { departament_id: user_department_id })
+    @notifications = @notifications.order(created_at: :desc)
+    order_filters
   end
 
   def show
@@ -45,12 +46,39 @@ class NotificationsController < ApplicationController
     end
   end
 
-  private
-    def set_notification
-      @notification = Notification.find(params[:id])
+  def mark_as_read
+    @notification = Notification.find(params[:id])
+    @notification.update(read: true)
+    respond_to do |format|
+      format.js
     end
+  end
 
-    def notification_params
-      params.require(:notification).permit(:title, :description, :status, :ticket_id, :user_id, :departament_id)
+  def mark_as_unread
+    @notification = Notification.find(params[:id])
+    @notification.update(read: false)
+    respond_to do |format|
+      format.js
     end
+  end
+
+  private
+
+  def order_filters
+    @notifications = @notifications.where('LOWER(notifications.title) LIKE ?', "%#{params[:filter_title]}%") if params[:filter_title].present?
+    @notifications = @notifications.where('LOWER(notifications.description) LIKE ?', "%#{params[:filter_description]}%") if params[:filter_description].present?
+    if params[:filter_date_start].present? && params[:filter_date_end].present?
+      start_date = Date.parse(params[:filter_date_start])
+      end_date = Date.parse(params[:filter_date_end]).end_of_day
+      @notifications = @notifications.where('DATE(notifications.created_at) BETWEEN ? AND ?', start_date, end_date)
+    end
+  end
+
+  def set_notification
+    @notification = Notification.find(params[:id])
+  end
+
+  def notification_params
+    params.require(:notification).permit(:title, :description, :status, :ticket_id, :user_id, :departament_id)
+  end
 end

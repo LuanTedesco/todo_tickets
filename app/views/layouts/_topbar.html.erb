@@ -5,7 +5,7 @@
         <i class="fas fa-search fa-fw"></i>
       </a>
     </li>
-    <% notifications = current_user.notifications.limit(5) %>
+    <% notifications = current_user.notifications.where(read: false).limit(5) %>
     <li class="nav-item dropdown no-arrow mx-1">
       <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="fas fa-bell fa-fw"></i>
@@ -13,19 +13,15 @@
       </a>
       <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
         <h6 class="dropdown-header">
-          Alertas
+          Notifications
         </h6>
         <% notifications.each do |notification| %>
           <a class="dropdown-item d-flex align-items-center" href="<%= edit_notification_path(notification) %>">
-            <div class="mr-3">
-              <div class="icon-circle bg-primary">
-                <i class="fas fa-file-alt text-white"></i>
-              </div>
-            </div>
             <div>
               <div class="small text-gray-500"><%= notification.created_at.strftime('%B %d, %Y') %></div>
-              <span class="font-weight-bold"><%= notification.title %></span>
+              <span class="font-weight-bold"><%= "Ticket: #{notification.title} has destined for you" %></span>
             </div>
+            <%= button_to 'Read', mark_as_read_notification_path(notification), method: :patch, remote: true, class: 'btn btn-sm btn-outline-success mr-0' %>
           </a>
         <% end %>
         <a class="dropdown-item text-center small text-gray-500" href="<%= notifications_path %>">Exibir tudo</a>
