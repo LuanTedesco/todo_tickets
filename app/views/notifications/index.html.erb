@@ -1,14 +1,43 @@
-<p style="color: green"><%= notice %></p>
-
-<h1>Notifications</h1>
-
-<div id="notifications">
-  <% @notifications.each do |notification| %>
-    <%= render notification %>
-    <p>
-      <%= link_to "Show this notification", notification %>
-    </p>
-  <% end %>
-</div>
-
-<%= link_to "New notification", new_notification_path %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Priorities</title>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Date Send</th>
+              <% if @user.admin? %>
+                <th>Status</th>
+              <% end %>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @notifications.each do |notification| %>
+              <tr>
+                <td><%= notification.title %></td>
+                <td><%= notification.description %></td>
+                <td><%= notification.created_at.strftime("%d/%m/%Y %H:%M") %></td>
+                <% if @user.admin? %>
+                  <td><%= notification.status ? 'Active' : 'Inactive' %></td>
+                <% end %>
+                <td class="text-right">
+                  <%= link_to 'Show', edit_notification_path(notification), class: "btn btn-primary btn-sm" %>
+                  <% if @user.admin? %>
+                    <%= link_to "Destroy", notification_path(notification), method: :delete, class: 'btn btn-danger btn-sm mr-3', data: { turbo_method: :delete, turbo_confirm: 'You sure?' } %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

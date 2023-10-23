@@ -1,8 +1,12 @@
 class NotificationsController < ApplicationController
+  layout 'application_tickets'
+  before_action :authenticate_user!
   before_action :set_notification, only: %i[ show edit update destroy ]
 
   def index
-    @notifications = Notification.all
+    user_department_id = current_user.departament_id
+    @notifications = current_user.notifications.where(status: true).joins(:ticket)
+                             .where(tickets: { departament_id: user_department_id })
   end
 
   def show
@@ -18,35 +22,26 @@ class NotificationsController < ApplicationController
   def create
     @notification = Notification.new(notification_params)
 
-    respond_to do |format|
-      if @notification.save
-        format.html { redirect_to notification_url(@notification), notice: "Notification was successfully created." }
-        format.json { render :show, status: :created, location: @notification }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @notification.errors, status: :unprocessable_entity }
-      end
+    if @notification.save
+      redirect_to notifications_path
+      flash[:success] = "Notification was successfully created."
     end
   end
 
   def update
-    respond_to do |format|
-      if @notification.update(notification_params)
-        format.html { redirect_to notification_url(@notification), notice: "Notification was successfully updated." }
-        format.json { render :show, status: :ok, location: @notification }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @notification.errors, status: :unprocessable_entity }
-      end
+    if @notification.update(notification_params)
+      redirect_to notifications_path
+      flash[:success] = "Notification was successfully updated."
     end
   end
 
   def destroy
-    @notification.destroy
+    @user = current_user
+    if @user.admin?
+      @notification.update(status: false)
 
-    respond_to do |format|
-      format.html { redirect_to notifications_url, notice: "Notification was successfully destroyed." }
-      format.json { head :no_content }
+      redirect_to notifications_path
+      flash[:success] = "Notification was successfully destroyed."
     end
   end
 
@@ -56,6 +51,6 @@ class NotificationsController < ApplicationController
     end
 
     def notification_params
-      params.require(:notification).permit(:title, :description, :date_send, :ticket_id, :user_id)
+      params.require(:notification).permit(:title, :description, :status, :ticket_id, :user_id, :departament_id)
     end
 end

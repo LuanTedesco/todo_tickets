@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_20_193601) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_23_131529) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -102,11 +102,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_20_193601) do
   create_table "notifications", force: :cascade do |t|
     t.string "title"
     t.string "description"
-    t.date "date_send"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "ticket_id"
     t.bigint "user_id"
+    t.boolean "status", default: true, null: false
+    t.bigint "departament_id"
+    t.index ["departament_id"], name: "index_notifications_on_departament_id"
     t.index ["ticket_id"], name: "index_notifications_on_ticket_id"
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
@@ -204,6 +206,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_20_193601) do
   add_foreign_key "categories", "departaments"
   add_foreign_key "comments", "tickets"
   add_foreign_key "comments", "users"
+  add_foreign_key "notifications", "departaments"
   add_foreign_key "notifications", "tickets"
   add_foreign_key "notifications", "users"
   add_foreign_key "sub_tasks", "tickets"

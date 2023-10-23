@@ -20,12 +20,8 @@ class TicketsController < ApplicationController
     @ticket.avatar_user = @user.avatar.attached? ? url_for(@user.avatar) : nil
     return unless @ticket.save
 
-    Notification.create(
-      title: "New ticket destined for you",
-      description: "New ticket created with title: " + @ticket.title,
-      date_send: Date.today,
-      user_id: @ticket.user_id,
-      ticket_id: @ticket.id)
+    create_notification(@ticket)
+
     redirect_to edit_ticket_path(@ticket)
     flash[:success] = 'Ticket was successfully created and is ready for editing.'
   end
@@ -44,6 +40,29 @@ class TicketsController < ApplicationController
   end
 
   private
+
+  def create_notification(ticket)
+    if ticket.user_id.nil?
+      department_users = User.where(departament_id: ticket.departament_id)
+      department_users.each do |user|
+        Notification.create(
+          title: "New ticket destined for you",
+          description: "New ticket created with title: #{ticket.title}",
+          user_id: user.id,
+          ticket_id: ticket.id,
+          departament_id: ticket.departament_id
+        )
+      end
+    else
+      Notification.create(
+        title: "New ticket destined for you",
+        description: "New ticket created with title: #{ticket.title}",
+        user_id: ticket.user_id,
+        ticket_id: ticket.id,
+        departament_id: ticket.departament_id
+      )
+    end
+  end
 
   def set_tags
     @tags = Tag.all
